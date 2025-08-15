@@ -1,0 +1,13 @@
+*node_modules/*
+*artifacts/*
+out
+target
+.DS_Store
+*.DS_Store
+*.ENV
+*.lock
+*.env
+!*/.sample.env
+*types/*
+*contracts.json
+deploy-scripts/vesting/**/*.csv
