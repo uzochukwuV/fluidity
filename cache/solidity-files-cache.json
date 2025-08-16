@@ -2092,52 +2092,6 @@
         "FluidLPToken"
       ]
     },
-    "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\UnifiedLiquidityPool.sol": {
-      "lastModificationDate": 1755174005100,
-      "contentHash": "9fad171956f220e4f4c1d020649113bd",
-      "sourceName": "contracts/core/UnifiedLiquidityPool.sol",
-      "solcConfig": {
-        "version": "0.8.24",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
-        "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
-        "@openzeppelin/contracts/utils/Pausable.sol",
-        "../interfaces/IUnifiedLiquidityPool.sol",
-        "../interfaces/IRiskEngine.sol",
-        "../libraries/Math.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.24"
-      ],
-      "artifacts": [
-        "UnifiedLiquidityPool"
-      ]
-    },
     "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\interfaces\\IRiskEngine.sol": {
       "lastModificationDate": 1755210362891,
       "contentHash": "c7748959f861a76c679b1b923ab41ada",
@@ -2173,50 +2127,6 @@
       ],
       "artifacts": [
         "IRiskEngine"
-      ]
-    },
-    "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\RiskEngine.sol": {
-      "lastModificationDate": 1755210378775,
-      "contentHash": "e0fa688df7a5507713fa90357e56f149",
-      "sourceName": "contracts/core/RiskEngine.sol",
-      "solcConfig": {
-        "version": "0.8.24",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
-        "@openzeppelin/contracts/utils/Pausable.sol",
-        "../interfaces/IRiskEngine.sol",
-        "../interfaces/IUnifiedLiquidityPool.sol",
-        "../libraries/Math.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.24"
-      ],
-      "artifacts": [
-        "RiskEngine"
       ]
     },
     "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\TroveManager.sol": {
@@ -2304,52 +2214,6 @@
       ],
       "artifacts": [
         "IStabilityPool"
-      ]
-    },
-    "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\StabilityPool.sol": {
-      "lastModificationDate": 1755210464668,
-      "contentHash": "ec9795b1bc71b21d4df370498575491a",
-      "sourceName": "contracts/core/StabilityPool.sol",
-      "solcConfig": {
-        "version": "0.8.24",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
-        "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
-        "../interfaces/IStabilityPool.sol",
-        "../tokens/USDF.sol",
-        "../tokens/FluidToken.sol",
-        "../libraries/Math.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.24"
-      ],
-      "artifacts": [
-        "StabilityPool"
       ]
     },
     "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\LiquidationHelpers.sol": {
@@ -2476,8 +2340,8 @@
       ]
     },
     "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\EnhancedStabilityPool.sol": {
-      "lastModificationDate": 1755213379570,
-      "contentHash": "ba023223a8d47777ee403422f06a7e6b",
+      "lastModificationDate": 1755326893372,
+      "contentHash": "020e9ab937b719251f4e090f3cd32774",
       "sourceName": "contracts/core/EnhancedStabilityPool.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -2519,6 +2383,87 @@
       ],
       "artifacts": [
         "EnhancedStabilityPool"
+      ]
+    },
+    "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\AdvancedRiskEngine.sol": {
+      "lastModificationDate": 1755285286016,
+      "contentHash": "5d86c090d76d1ec810dae5893ad427cb",
+      "sourceName": "contracts/core/AdvancedRiskEngine.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "../libraries/Math.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "AdvancedRiskEngine"
+      ]
+    },
+    "C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\contracts\\core\\EnhancedFeeManager.sol": {
+      "lastModificationDate": 1755284548897,
+      "contentHash": "b91739e88a08df27f7d1cb8631f3911a",
+      "sourceName": "contracts/core/EnhancedFeeManager.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "../libraries/Math.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "EnhancedFeeManager"
       ]
     }
   }

@@ -104,7 +104,7 @@ contract EnhancedStabilityPool is IStabilityPool, Ownable, ReentrancyGuard {
     /**
      * @dev Deposit USDF into stability pool with comprehensive reward handling
      */
-    function provideToSP(uint256 amount, address /* frontEndTag */) external nonReentrant {
+    function provideToSP(uint256 amount, address _frontEndTag) external nonReentrant {
         require(amount > 0, "Amount must be greater than 0");
         require(usdfToken.balanceOf(msg.sender) >= amount, "Insufficient USDF balance");
 
