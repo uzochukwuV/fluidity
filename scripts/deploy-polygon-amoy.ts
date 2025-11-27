@@ -245,7 +245,8 @@ async function main() {
     const capitalEngine = await CapitalEngineFactory.deploy(
       addresses.accessControl,
       addresses.liquidityCore,
-      addresses.troveManagerV2
+      addresses.troveManagerV2,
+      addresses.usdf
     );
     await capitalEngine.waitForDeployment();
     addresses.capitalEfficiencyEngine = await capitalEngine.getAddress();
@@ -278,9 +279,11 @@ async function main() {
     console.log("\n📦 [13/13] Setting up roles...");
     const BORROWER_OPS_ROLE = await accessControl.BORROWER_OPS_ROLE();
     const TROVE_MANAGER_ROLE = await accessControl.TROVE_MANAGER_ROLE();
+    const LIQUIDITY_CORE_ROLE = await accessControl.LIQUIDITY_CORE_ROLE();
 
     await accessControl.grantRole(BORROWER_OPS_ROLE, addresses.borrowerOpsV2);
     await accessControl.grantRole(TROVE_MANAGER_ROLE, addresses.troveManagerV2);
+    await accessControl.grantRole(LIQUIDITY_CORE_ROLE, addresses.liquidityCore);
     console.log("   ✅ Roles configured");
 
     // Setup USDF minting

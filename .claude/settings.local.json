@@ -14,7 +14,9 @@
       "Read(/C:\\Users\\ASUS FX95G\\Documents\\apps\\fluid-fork\\fluid-protocol\\solidity\\scripts/**)",
       "Bash(touch:*)",
       "Read(//c/Users/ASUS FX95G/Documents/apps/fluid-fork/fluid-frontend/**)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(cd:*)",
+      "Bash(npm test:*)"
     ],
     "deny": [],
     "ask": []

@@ -21,6 +21,7 @@ contract AccessControlManager is AccessControl, Pausable, ReentrancyGuard {
     bytes32 public constant BORROWER_OPS_ROLE = keccak256("BORROWER_OPS_ROLE");
     bytes32 public constant TROVE_MANAGER_ROLE = keccak256("TROVE_MANAGER_ROLE");
     bytes32 public constant STABILITY_POOL_ROLE = keccak256("STABILITY_POOL_ROLE");
+    bytes32 public constant LIQUIDITY_CORE_ROLE = keccak256("LIQUIDITY_CORE_ROLE");
     
     // Emergency controls
     mapping(address => bool) public contractPaused;

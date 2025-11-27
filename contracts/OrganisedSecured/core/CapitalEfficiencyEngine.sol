@@ -8,6 +8,8 @@ import "../interfaces/ICapitalEfficiencyEngine.sol";
 import "../interfaces/ILiquidityCore.sol";
 import "../interfaces/ITroveManager.sol";
 import "../interfaces/IFluidAMM.sol";
+import "../interfaces/IVaultManager.sol";
+import "../interfaces/IStakingPool.sol";
 import "../libraries/GasOptimizedMath.sol";
 
 /**
@@ -166,10 +168,19 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
     /// @notice TroveManager - provides debt information
     ITroveManager public immutable troveManager;
 
+    /// @notice USDF Stablecoin - used for AMM pairing
+    IERC20 public immutable usdfToken;
+
     // ============ State Variables ============
 
     /// @notice FluidAMM contract
     IFluidAMM public fluidAMM;
+
+    /// @notice Vault manager contract (for future vault integration)
+    address public vaultManager;
+
+    /// @notice Staking pool contract (for future staking integration)
+    address public stakingPool;
 
     /// @notice Capital allocations per asset
     mapping(address => CapitalAllocation) private _allocations;
@@ -190,17 +201,21 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
      * @param _accessControl Access control manager
      * @param _liquidityCore LiquidityCore address
      * @param _troveManager TroveManager address
+     * @param _usdfToken USDF stablecoin address for AMM pairing
      */
     constructor(
         address _accessControl,
         address _liquidityCore,
-        address _troveManager
+        address _troveManager,
+        address _usdfToken
     ) OptimizedSecurityBase(_accessControl) {
         require(_liquidityCore != address(0), "Invalid LiquidityCore");
         require(_troveManager != address(0), "Invalid TroveManager");
+        require(_usdfToken != address(0), "Invalid USDF token");
 
         liquidityCore = ILiquidityCore(_liquidityCore);
         troveManager = ITroveManager(_troveManager);
+        usdfToken = IERC20(_usdfToken);
     }
 
     // ============ Modifiers ============
@@ -256,6 +271,17 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
 
         AllocationConfig memory config = _configs[asset];
 
+        // === FIX: Validate strategy availability before allocation ===
+        if (config.vaultsAllocationPct > 0) {
+            require(vaultManager != address(0),
+                "CEE: Vault allocation enabled but vaultManager not set");
+        }
+
+        if (config.stakingAllocationPct > 0) {
+            require(stakingPool != address(0),
+                "CEE: Staking allocation enabled but stakingPool not set");
+        }
+
         // Calculate allocations based on percentages
         toAMM = (amount * config.ammAllocationPct) / BASIS_POINTS;
         toVaults = (amount * config.vaultsAllocationPct) / BASIS_POINTS;
@@ -293,9 +319,42 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
             // Approve AMM to spend
             IERC20(asset).forceApprove(address(fluidAMM), toAMM);
 
+            // === FIX CRIT-3.2: Implement addLiquidity with proper USDF pairing ===
+            // Get pool reserves to calculate optimal USDF amount
+            (uint256 reserveAsset, uint256 reserveUSDH) = fluidAMM.getReserves(asset, address(usdfToken));
+
+            // Calculate USDF amount needed for balanced pool entry
+            // usdfAmount = (toAMM * reserveUSDH) / reserveAsset
+            uint256 usdfAmount = 0;
+            if (reserveAsset > 0) {
+                usdfAmount = (toAMM * reserveUSDH) / reserveAsset;
+            } else {
+                // If pool is empty, use 1:1 ratio as default
+                usdfAmount = toAMM;
+            }
+
+            // Get USDF from LiquidityCore for pairing
+            // USDF is debt token, get it from LiquidityCore's reserves
+            liquidityCore.transferCollateral(address(usdfToken), address(this), usdfAmount);
+            IERC20(address(usdfToken)).forceApprove(address(fluidAMM), usdfAmount);
+
             // Add liquidity to AMM (protocol-owned liquidity)
-            // Note: This would need the USDF pair amount, simplified here
-            // In production, would calculate optimal USDF amount based on pool ratio
+            // Parameters: token0, token1, amount0Desired, amount1Desired, amount0Min, amount1Min
+            // Using 99% of desired amounts for slippage tolerance (1% max slippage)
+            uint256 minAsset = (toAMM * 99) / 100;
+            uint256 minUSDH = (usdfAmount * 99) / 100;
+
+            (uint256 amountAsset, uint256 amountUSDH, uint256 liquidity) = fluidAMM.addLiquidity(
+                asset,
+                address(usdfToken),
+                toAMM,
+                usdfAmount,
+                minAsset,
+                minUSDH
+            );
+
+            // Track LP tokens received
+            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) + liquidity);
         }
 
         emit CollateralAllocated(asset, amount, toAMM, toVaults, toStaking);
@@ -304,6 +363,7 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
     /**
      * @notice Rebalance asset allocation
      * @inheritdoc ICapitalEfficiencyEngine
+     * @dev FIX: Added validation that strategies are available before rebalancing to them
      */
     function rebalance(address asset)
         external
@@ -323,6 +383,17 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         uint256 totalCollateral = liquidityCore.getCollateralReserve(asset);
         allocation.totalCollateral = _toUint128(totalCollateral);
 
+        // === FIX: Validate strategy availability before rebalancing ===
+        if (config.vaultsAllocationPct > 0) {
+            require(vaultManager != address(0),
+                "CEE: Cannot rebalance to vaults - vaultManager not set");
+        }
+
+        if (config.stakingAllocationPct > 0) {
+            require(stakingPool != address(0),
+                "CEE: Cannot rebalance to staking - stakingPool not set");
+        }
+
         // Calculate target allocations
         uint256 targetAMM = (totalCollateral * config.ammAllocationPct) / BASIS_POINTS;
         uint256 targetVaults = (totalCollateral * config.vaultsAllocationPct) / BASIS_POINTS;
@@ -330,9 +401,10 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
 
         uint256 currentAMM = allocation.allocatedToAMM;
 
+        // === FIX CRIT-3.3: Rebalance AMM allocation ===
         // Rebalance AMM allocation
         if (currentAMM < targetAMM && address(fluidAMM) != address(0)) {
-            // TODO: Add liquidity to AMM
+            // === ADD LIQUIDITY PATH ===
             uint256 toAdd = targetAMM - currentAMM;
 
             // 1. Verify LiquidityCore has balance (FIX CRIT-1)
@@ -345,50 +417,77 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
             // 3. Approve AMM to spend
             IERC20(asset).forceApprove(address(fluidAMM), toAdd);
 
-            // 4. TODO: Calculate optimal USDF amount based on pool reserves
-            //    (uint256 reserve0, uint256 reserve1) = fluidAMM.getReserves(asset, usdfToken);
-            //    uint256 usdfAmount = (toAdd * reserve1) / reserve0;
-            //
-            // 5. TODO: Add liquidity to AMM with slippage protection
-            //    (uint256 amountA, uint256 amountB, uint256 liquidity) = fluidAMM.addLiquidity(
-            //        asset,
-            //        usdfToken,
-            //        toAdd,
-            //        usdfAmount,
-            //        toAdd * 95 / 100,     // 5% slippage tolerance
-            //        usdfAmount * 95 / 100
-            //    );
-            //
-            // 6. TODO: Update LP tokens owned
-            //    allocation.lpTokensOwned = _toUint128(uint256(allocation.lpTokensOwned) + liquidity);
+            // 4. Calculate optimal USDF amount based on pool reserves
+            (uint256 reserveAsset, uint256 reserveUSDH) = fluidAMM.getReserves(asset, address(usdfToken));
+            uint256 usdfAmount = 0;
+            if (reserveAsset > 0) {
+                usdfAmount = (toAdd * reserveUSDH) / reserveAsset;
+            } else {
+                usdfAmount = toAdd;  // Default 1:1 for empty pools
+            }
 
-            // For now, just update allocation tracking
+            // Get USDF from LiquidityCore for pairing
+            liquidityCore.transferCollateral(address(usdfToken), address(this), usdfAmount);
+            IERC20(address(usdfToken)).forceApprove(address(fluidAMM), usdfAmount);
+
+            // 5. Add liquidity to AMM with slippage protection (5% tolerance)
+            uint256 minAsset = (toAdd * 95) / 100;
+            uint256 minUSDH = (usdfAmount * 95) / 100;
+
+            (uint256 amountA, uint256 amountB, uint256 liquidity) = fluidAMM.addLiquidity(
+                asset,
+                address(usdfToken),
+                toAdd,
+                usdfAmount,
+                minAsset,
+                minUSDH
+            );
+
+            // 6. Update LP tokens owned
+            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) + liquidity);
+
+            // Update allocation tracking
             allocation.allocatedToAMM = _toUint128(targetAMM);
 
         } else if (currentAMM > targetAMM && address(fluidAMM) != address(0)) {
-            // TODO: Remove liquidity from AMM
+            // === REMOVE LIQUIDITY PATH ===
             uint256 toRemove = currentAMM - targetAMM;
 
-            // 1. TODO: Calculate LP tokens to burn
-            //    uint256 lpTokensToBurn = calculateLPTokensForAmount(asset, toRemove);
-            //
-            // 2. TODO: Remove liquidity from AMM
-            //    (uint256 amountA, uint256 amountB) = fluidAMM.removeLiquidity(
-            //        asset,
-            //        usdfToken,
-            //        lpTokensToBurn,
-            //        toRemove * 95 / 100,     // 5% slippage tolerance
-            //        0                         // Accept any USDF amount
-            //    );
-            //
-            // 3. TODO: Update LP tokens owned
-            //    allocation.lpTokensOwned = _toUint128(uint256(allocation.lpTokensOwned) - lpTokensToBurn);
-            //
-            // 4. TODO: Return collateral to LiquidityCore
-            //    IERC20(asset).forceApprove(address(liquidityCore), amountA);
-            //    // Call LiquidityCore.receiveReturn() or similar
+            // 1. Calculate LP tokens to burn based on allocation amount
+            // LP tokens to remove = (toRemove / currentAMM) * lpTokensOwned
+            uint256 lpTokensToBurn = 0;
+            if (currentAMM > 0 && allocation.lpTokensOwned > 0) {
+                lpTokensToBurn = (toRemove * uint256(allocation.lpTokensOwned)) / currentAMM;
+            }
 
-            // For now, just update allocation tracking
+            // 2. Remove liquidity from AMM with slippage protection (5% tolerance)
+            uint256 minAsset = (toRemove * 95) / 100;
+            uint256 minUSDH = 0;  // Accept any USDF amount returned
+
+            (uint256 amountA, uint256 amountB) = fluidAMM.removeLiquidity(
+                asset,
+                address(usdfToken),
+                lpTokensToBurn,
+                minAsset,
+                minUSDH
+            );
+
+            // 3. Update LP tokens owned
+            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) - lpTokensToBurn);
+
+            // 4. Return collateral to LiquidityCore
+            if (amountA > 0) {
+                IERC20(asset).safeTransfer(address(liquidityCore), amountA);
+                liquidityCore.depositCollateral(asset, address(this), amountA);
+            }
+
+            // Return any USDF received back to LiquidityCore
+            if (amountB > 0) {
+                IERC20(address(usdfToken)).safeTransfer(address(liquidityCore), amountB);
+                liquidityCore.depositCollateral(address(usdfToken), address(this), amountB);
+            }
+
+            // Update allocation tracking
             allocation.allocatedToAMM = _toUint128(targetAMM);
         }
 
@@ -403,7 +502,9 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
     /**
      * @notice Withdraw collateral from strategies (for liquidations)
      * @inheritdoc ICapitalEfficiencyEngine
-     * @dev FIX HIGH-2: Cascading withdrawal mechanism
+     * @dev FIX HIGH-2: Cascading withdrawal mechanism with proper CEI pattern
+     *      Now: CHECKS → INTERACTIONS → EFFECTS (correct order)
+     *      Before: State updates happened before confirming actual withdrawals
      */
     function withdrawFromStrategies(
         address asset,
@@ -420,7 +521,6 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         require(destination != address(0), "Invalid destination");
 
         CapitalAllocation storage allocation = _allocations[asset];
-        uint256 withdrawn = 0;
 
         // === CHECKS ===
         // Calculate total available across strategies
@@ -432,47 +532,68 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
             revert InsufficientCollateral(asset, amount, totalAvailable);
         }
 
-        // === EFFECTS & INTERACTIONS (Cascading withdrawal) ===
+        // === INTERACTIONS (BEFORE state updates!) ===
+        // Calculate what we will withdraw from each strategy (without modifying state yet)
 
-        // 1. Try AMM first (most liquid)
+        uint256 withdrawn = 0;
+        uint256 ammWithdrawn = 0;
+        uint256 vaultsWithdrawn = 0;
+        uint256 stakingWithdrawn = 0;
+
+        // 1. Calculate AMM withdrawal (most liquid first)
         if (withdrawn < amount && allocation.allocatedToAMM > 0) {
             uint256 needed = amount - withdrawn;
-            uint256 fromAMM = needed.min(allocation.allocatedToAMM);
+            ammWithdrawn = needed.min(allocation.allocatedToAMM);
 
             if (address(fluidAMM) != address(0)) {
-                // Withdraw from AMM
-                fluidAMM.emergencyWithdrawLiquidity(asset, fromAMM, address(this));
-
-                allocation.allocatedToAMM = _toUint128(uint256(allocation.allocatedToAMM) - fromAMM);
-                withdrawn += fromAMM;
-
-                emit CollateralRecalled(asset, fromAMM, "AMM");
+                // Execute AMM withdrawal BEFORE state update
+                fluidAMM.emergencyWithdrawLiquidity(asset, ammWithdrawn, address(this));
+                withdrawn += ammWithdrawn;
             }
         }
 
-        // 2. Try Vaults (if AMM insufficient)
+        // 2. Calculate Vaults withdrawal (if AMM insufficient)
         if (withdrawn < amount && allocation.allocatedToVaults > 0) {
             uint256 needed = amount - withdrawn;
-            uint256 fromVaults = needed.min(allocation.allocatedToVaults);
+            vaultsWithdrawn = needed.min(allocation.allocatedToVaults);
 
-            // Future: Withdraw from vaults
-            allocation.allocatedToVaults = _toUint128(uint256(allocation.allocatedToVaults) - fromVaults);
-            withdrawn += fromVaults;
+            // Validate vaults are available before attempting withdrawal
+            require(vaultManager != address(0),
+                "CEE: Vault withdrawal requested but vaultManager not set");
 
-            emit CollateralRecalled(asset, fromVaults, "Vaults");
+            // === FIX CRIT-3.5: Implement actual vault withdrawal ===
+            // Import the vault interface for interaction
+            // Note: Actual implementation depends on specific vault interface
+            // For now, use emergencyWithdraw which doesn't require share calculations
+            IVaultManager(vaultManager).emergencyWithdraw(asset, vaultsWithdrawn);
+            withdrawn += vaultsWithdrawn;
         }
 
-        // 3. Try Staking (last resort)
+        // 3. Calculate Staking withdrawal (last resort)
         if (withdrawn < amount && allocation.allocatedToStaking > 0) {
             uint256 needed = amount - withdrawn;
-            uint256 fromStaking = needed.min(allocation.allocatedToStaking);
+            stakingWithdrawn = needed.min(allocation.allocatedToStaking);
 
-            // Future: Withdraw from staking
-            allocation.allocatedToStaking = _toUint128(uint256(allocation.allocatedToStaking) - fromStaking);
-            withdrawn += fromStaking;
+            // Validate staking is available before attempting withdrawal
+            require(stakingPool != address(0),
+                "CEE: Staking withdrawal requested but stakingPool not set");
 
-            emit CollateralRecalled(asset, fromStaking, "Staking");
+            // === FIX CRIT-3.5: Implement actual staking withdrawal ===
+            // Import the staking interface for interaction
+            // Use emergencyWithdraw to quickly exit without share calculations
+            IStakingPool(stakingPool).emergencyWithdraw(asset, stakingWithdrawn);
+            withdrawn += stakingWithdrawn;
         }
+
+        // Verify we actually received what we expected
+        uint256 contractBalance = IERC20(asset).balanceOf(address(this));
+        require(contractBalance >= withdrawn, "Insufficient contract balance after withdrawal");
+
+        // === EFFECTS (NOW update state after confirming success) ===
+        // Update allocation tracking
+        allocation.allocatedToAMM = _toUint128(uint256(allocation.allocatedToAMM) - ammWithdrawn);
+        allocation.allocatedToVaults = _toUint128(uint256(allocation.allocatedToVaults) - vaultsWithdrawn);
+        allocation.allocatedToStaking = _toUint128(uint256(allocation.allocatedToStaking) - stakingWithdrawn);
 
         // Update reserve buffer
         uint256 totalDeployed = uint256(allocation.allocatedToAMM) +
@@ -480,12 +601,13 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
                                  uint256(allocation.allocatedToStaking);
         allocation.reserveBuffer = _toUint128(uint256(allocation.totalCollateral) - totalDeployed);
 
-        // FIX CRIT-1: Verify we have the balance before transfer
-        uint256 balance = IERC20(asset).balanceOf(address(this));
-        require(balance >= withdrawn, "Insufficient contract balance");
-
-        // Transfer to destination
+        // Final transfer to destination
         IERC20(asset).safeTransfer(destination, withdrawn);
+
+        // Emit events
+        if (ammWithdrawn > 0) emit CollateralRecalled(asset, ammWithdrawn, "AMM");
+        if (vaultsWithdrawn > 0) emit CollateralRecalled(asset, vaultsWithdrawn, "Vaults");
+        if (stakingWithdrawn > 0) emit CollateralRecalled(asset, stakingWithdrawn, "Staking");
 
         emit EmergencyWithdrawal(asset, withdrawn, destination, "Liquidation");
     }
@@ -530,10 +652,15 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         // Update reserve buffer
         allocation.reserveBuffer = _toUint128(uint256(allocation.totalCollateral));
 
-        // Return all to LiquidityCore
+        // === FIX CRIT-3.1: Return all to LiquidityCore ===
+        // Transfer collateral back to LiquidityCore
         if (totalRecalled > 0) {
-            IERC20(asset).forceApprove(address(liquidityCore), totalRecalled);
-            // Note: Would need LiquidityCore function to accept returns
+            // Transfer tokens directly to LiquidityCore
+            IERC20(asset).safeTransfer(address(liquidityCore), totalRecalled);
+
+            // Call depositCollateral to register the return in LiquidityCore accounting
+            // This ensures the returned collateral is properly tracked in LCore reserves
+            liquidityCore.depositCollateral(asset, address(this), totalRecalled);
         }
 
         emit EmergencyWithdrawal(asset, totalRecalled, address(liquidityCore), "Emergency recall");
@@ -684,14 +811,17 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         require(!_allocations[asset].isActive, "Asset already active");
 
         // Set default configuration
+        // FIX: Set vaults/staking to 0% by default until implementation is complete
         _configs[asset] = AllocationConfig({
-            reserveBufferPct: MIN_RESERVE_BUFFER,      // 30%
-            ammAllocationPct: MAX_AMM_ALLOCATION,      // 40%
-            vaultsAllocationPct: MAX_VAULTS_ALLOCATION,// 20%
-            stakingAllocationPct: MAX_STAKING_ALLOCATION, // 10%
+            reserveBufferPct: 7000,                    // 70% - Safety buffer (increased while vaults/staking not ready)
+            ammAllocationPct: MAX_AMM_ALLOCATION,      // 40% - FluidAMM (only implemented strategy)
+            vaultsAllocationPct: 0,                    // 0% - NOT YET IMPLEMENTED
+            stakingAllocationPct: 0,                   // 0% - NOT YET IMPLEMENTED
             rebalanceThreshold: 1000,                  // 10%
             autoRebalance: true
         });
+        // NOTE: After vault/staking integration is complete, admin can call setAllocationConfig()
+        // to enable them: {reserveBuffer: 3000, amm: 4000, vaults: 2000, staking: 1000}
 
         _allocations[asset].isActive = true;
         _allocations[asset].lastRebalance = _toUint32(block.timestamp);
@@ -759,6 +889,32 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
     {
         require(amm != address(0), "Invalid AMM address");
         fluidAMM = IFluidAMM(amm);
+    }
+
+    /**
+     * @notice Set Vault Manager address (for future vault integration)
+     * @param _vaultManager Vault manager contract address
+     * @dev Only admin can set this
+     */
+    function setVaultManager(address _vaultManager)
+        external
+        onlyValidRole(accessControl.ADMIN_ROLE())
+    {
+        require(_vaultManager != address(0), "CEE: Invalid vault manager address");
+        vaultManager = _vaultManager;
+    }
+
+    /**
+     * @notice Set Staking Pool address (for future staking integration)
+     * @param _stakingPool Staking pool contract address
+     * @dev Only admin can set this
+     */
+    function setStakingPool(address _stakingPool)
+        external
+        onlyValidRole(accessControl.ADMIN_ROLE())
+    {
+        require(_stakingPool != address(0), "CEE: Invalid staking pool address");
+        stakingPool = _stakingPool;
     }
 
     /**

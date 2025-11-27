@@ -20,6 +20,11 @@ contract UnifiedLiquidityPool is OptimizedSecurityBase, IUnifiedLiquidityPool {
     mapping(address => mapping(address => uint256)) public userBorrows;
     mapping(address => LiquidityAllocation) public allocations;
 
+    // === FIX CRIT-3: Cross-collateral debt tracking ===
+    /// @notice Total debt value across all debt tokens for each user (in 1e18 scale)
+    /// @dev Used to enforce maximum collateralization ratio across all collaterals
+    mapping(address => uint256) public userTotalDebtValue;
+
     address[] public supportedAssets;
     IPriceOracle public priceOracle;
 
@@ -57,36 +62,60 @@ contract UnifiedLiquidityPool is OptimizedSecurityBase, IUnifiedLiquidityPool {
         require(assets[token].canBorrow, "Borrowing disabled");
         require(amount > 0, "Invalid amount");
 
-        // Get collateral and debt values using price oracle
+        // Get collateral amount
         uint256 collateralAmount = userDeposits[msg.sender][collateralToken];
         require(collateralAmount > 0, "No collateral deposited");
 
         // Get prices from oracle (in 18 decimals)
-        uint256 collateralPrice = priceOracle.getPrice(collateralToken);
         uint256 debtPrice = priceOracle.getPrice(token);
 
-        // Calculate collateral value: (collateral amount * price) * collateral factor
-        uint256 collateralValue = (collateralAmount * collateralPrice / 1e18) * assets[collateralToken].collateralFactor / 1e18;
+        // === FIX CRIT-3: Cross-collateral validation ===
+        // Calculate new total debt value ACROSS ALL ASSETS (not just this collateral)
+        uint256 newBorrowValue = (amount * debtPrice) / 1e18;
+        uint256 newTotalDebtValue = userTotalDebtValue[msg.sender] + newBorrowValue;
 
-        // Calculate total debt value: (current borrows + new borrow) * debt token price
-        uint256 totalBorrows = userBorrows[msg.sender][token] + amount;
-        uint256 totalDebtValue = (totalBorrows * debtPrice) / 1e18;
+        // Calculate total collateral value ACROSS ALL ASSETS
+        uint256 totalCollateralValue = getTotalUserCollateralValue(msg.sender);
 
-        // Require: collateral value >= debt value
-        require(collateralValue >= totalDebtValue, "Insufficient collateral");
+        // Require: totalCollateral * MCR (110%) >= totalDebt * 100%
+        // This means: totalCollateral >= totalDebt / 1.1
+        // Or equivalently: totalCollateral * 110 >= totalDebt * 100
+        uint256 MCR = 110; // 110% (10% safety buffer)
+        require(
+            totalCollateralValue * MCR >= newTotalDebtValue * 100,
+            "ULP: Insufficient collateral for cross-collateral MCR"
+        );
 
+        // Update user debt tracking
         userBorrows[msg.sender][token] += amount;
+        userTotalDebtValue[msg.sender] = newTotalDebtValue;
+
+        // Update global tracking
         assets[token].totalBorrows += amount;
 
+        // Transfer debt tokens to user
         IERC20(token).safeTransfer(msg.sender, amount);
     }
     
     function repay(address token, uint256 amount) external nonReentrant {
         require(userBorrows[msg.sender][token] >= amount, "Repay amount too high");
-        
+
+        // Get price from oracle
+        uint256 debtPrice = priceOracle.getPrice(token);
+
+        // Transfer debt tokens from user to pool
         IERC20(token).safeTransferFrom(msg.sender, address(this), amount);
-        
+
+        // Update user debt tracking
         userBorrows[msg.sender][token] -= amount;
+
+        // === FIX CRIT-3: Update total debt value ===
+        uint256 repayValue = (amount * debtPrice) / 1e18;
+        userTotalDebtValue[msg.sender] = userTotalDebtValue[msg.sender] > repayValue
+            ? userTotalDebtValue[msg.sender] - repayValue
+            : 0;
+
+        // Update global tracking
         assets[token].totalBorrows -= amount;
     }
     
@@ -169,63 +198,69 @@ contract UnifiedLiquidityPool is OptimizedSecurityBase, IUnifiedLiquidityPool {
     function getUserBorrows(address user, address token) external view returns (uint256) {
         return userBorrows[user][token];
     }
-    
-    function getUserHealthFactor(address user) external view returns (uint256) {
-        uint256 totalCollateralValue = 0;
-        uint256 totalDebtValue = 0;
 
-        // Calculate total collateral and debt across all assets
+    /// @notice Get user's total debt value across all debt tokens
+    /// @param user User address
+    /// @return Total debt value in 1e18 scale
+    function getUserTotalDebtValue(address user) external view returns (uint256) {
+        return userTotalDebtValue[user];
+    }
+    
+    /// @notice Calculate total collateral value across all assets for a user
+    /// @param user User address
+    /// @return Total collateral value in 1e18 scale with collateral factors applied
+    /// @dev Used for cross-collateral validation and liquidation calculations
+    function getTotalUserCollateralValue(address user) public view returns (uint256) {
+        uint256 totalCollateralValue = 0;
+
+        // Sum collateral value across all deposited collateral types
         for (uint256 i = 0; i < supportedAssets.length; i++) {
             address token = supportedAssets[i];
+            uint256 amount = userDeposits[user][token];
 
-            // Add collateral value (using price oracle)
-            uint256 collateralAmount = userDeposits[user][token];
-            if (collateralAmount > 0) {
+            if (amount > 0) {
                 uint256 price = priceOracle.getPrice(token);
-                totalCollateralValue += (collateralAmount * price / 1e18) * assets[token].collateralFactor / 1e18;
-            }
-
-            // Add debt value (using price oracle)
-            uint256 debtAmount = userBorrows[user][token];
-            if (debtAmount > 0) {
-                uint256 price = priceOracle.getPrice(token);
-                totalDebtValue += (debtAmount * price) / 1e18;
+                // Apply collateral factor: (amount * price / 1e18) * factor / 1e18
+                uint256 factor = assets[token].collateralFactor;
+                totalCollateralValue += (amount * price / 1e18) * factor / 1e18;
             }
         }
+
+        return totalCollateralValue;
+    }
+
+    /// @notice Get user's health factor (collateral value / debt value)
+    /// @param user User address
+    /// @return Health factor in 1e18 scale (e.g., 1.5e18 = 150% = healthy)
+    function getUserHealthFactor(address user) external view returns (uint256) {
+        uint256 totalCollateralValue = getTotalUserCollateralValue(user);
+        uint256 totalDebtValue = userTotalDebtValue[user];
 
         // Return health factor (collateral / debt * 1e18)
         if (totalDebtValue == 0) return type(uint256).max; // No debt = infinite health
         return (totalCollateralValue * 1e18) / totalDebtValue;
     }
     
-    function liquidate(address user, address collateralToken, address debtToken, uint256 debtAmount) external nonReentrant {
-        // Verify user is liquidatable
+    function liquidate(address user, address collateralToken, address debtToken, uint256 debtAmount)
+        external
+        nonReentrant
+    {
+        // === CHECKS ===
         require(assets[debtToken].canBorrow, "Invalid debt token");
         require(userBorrows[user][debtToken] >= debtAmount, "Invalid liquidation amount");
 
-        // Check user health factor is below 1.0 (liquidatable)
-        uint256 totalCollateralValue = 0;
-        uint256 totalDebtValue = 0;
-        for (uint256 i = 0; i < supportedAssets.length; i++) {
-            address token = supportedAssets[i];
-            uint256 collateralAmount = userDeposits[user][token];
-            if (collateralAmount > 0) {
-                uint256 price = priceOracle.getPrice(token);
-                totalCollateralValue += (collateralAmount * price / 1e18) * assets[token].collateralFactor / 1e18;
-            }
-            uint256 debtAmount_loop = userBorrows[user][token];
-            if (debtAmount_loop > 0) {
-                uint256 price = priceOracle.getPrice(token);
-                totalDebtValue += (debtAmount_loop * price) / 1e18;
-            }
-        }
+        // === FIX CRIT-3: Check health factor based on TOTAL debt and collateral ===
+        uint256 totalCollateralValue = getTotalUserCollateralValue(user);
+        uint256 totalDebtValue = userTotalDebtValue[user];
+
+        // Require health factor < 1.0 (100%) - user is underwater
         require(totalDebtValue > 0 && totalCollateralValue < totalDebtValue, "User not liquidatable");
 
         // Get prices for debt and collateral tokens
         uint256 debtPrice = priceOracle.getPrice(debtToken);
         uint256 collateralPrice = priceOracle.getPrice(collateralToken);
 
-        // Calculate collateral to seize: debt value * 1.05 (5% liquidation bonus) / collateral price
+        // Calculate collateral to seize based on debt amount
         uint256 debtValue = (debtAmount * debtPrice) / 1e18;
         uint256 liquidationBonus = assets[collateralToken].liquidationBonus; // e.g., 1.05e18 for 5%
         uint256 collateralValueToSeize = (debtValue * liquidationBonus) / 1e18;
@@ -234,13 +269,22 @@ contract UnifiedLiquidityPool is OptimizedSecurityBase, IUnifiedLiquidityPool {
         // Ensure user has enough collateral to seize
         require(userDeposits[user][collateralToken] >= collateralAmountToSeize, "Insufficient collateral to seize");
 
-        // Update user positions
+        // === EFFECTS ===
+        // Update debt tracking
         userBorrows[user][debtToken] -= debtAmount;
         assets[debtToken].totalBorrows -= debtAmount;
 
+        // === FIX CRIT-3: Update total debt value ===
+        uint256 repayValue = (debtAmount * debtPrice) / 1e18;
+        userTotalDebtValue[user] = userTotalDebtValue[user] > repayValue
+            ? userTotalDebtValue[user] - repayValue
+            : 0;
+
+        // Update collateral positions
         userDeposits[user][collateralToken] -= collateralAmountToSeize;
         assets[collateralToken].totalDeposits -= collateralAmountToSeize;
 
+        // === INTERACTIONS ===
         // Transfer debt tokens from liquidator to pool
         IERC20(debtToken).safeTransferFrom(msg.sender, address(this), debtAmount);
 
@@ -251,37 +295,23 @@ contract UnifiedLiquidityPool is OptimizedSecurityBase, IUnifiedLiquidityPool {
     }
     
     function isLiquidatable(address user) external view returns (bool) {
-        uint256 totalCollateralValue = 0;
-        uint256 totalDebtValue = 0;
-
-        // Calculate total collateral and debt across all assets
-        for (uint256 i = 0; i < supportedAssets.length; i++) {
-            address token = supportedAssets[i];
-
-            // Add collateral value (using price oracle)
-            uint256 collateralAmount = userDeposits[user][token];
-            if (collateralAmount > 0) {
-                uint256 price = priceOracle.getPrice(token);
-                totalCollateralValue += (collateralAmount * price / 1e18) * assets[token].collateralFactor / 1e18;
-            }
-
-            // Add debt value (using price oracle)
-            uint256 debtAmount = userBorrows[user][token];
-            if (debtAmount > 0) {
-                uint256 price = priceOracle.getPrice(token);
-                totalDebtValue += (debtAmount * price) / 1e18;
-            }
-        }
+        // === FIX CRIT-3: Use global debt tracking ===
+        uint256 totalCollateralValue = getTotalUserCollateralValue(user);
+        uint256 totalDebtValue = userTotalDebtValue[user];
 
         // Liquidatable if health factor < 1.0 (100%)
         if (totalDebtValue == 0) return false;
         return totalCollateralValue < totalDebtValue;
     }
     
-    function borrowLiquidity(address token, uint256 amount) external nonReentrant {
+    function borrowLiquidity(address token, uint256 amount)
+        external
+        nonReentrant
+        onlyValidRole(accessControl.LIQUIDITY_CORE_ROLE())
+    {
         require(assets[token].isActive, "Asset not supported");
         require(getAvailableLiquidity(token) >= amount, "Insufficient liquidity");
-        
+
         assets[token].totalBorrows += amount;
         IERC20(token).safeTransfer(msg.sender, amount);
     }
