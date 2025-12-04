@@ -309,61 +309,60 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         // === INTERACTIONS ===
         // Deploy to AMM if needed
         if (toAMM > 0 && address(fluidAMM) != address(0)) {
-            // FIX CRIT-1: Verify LiquidityCore has the balance
-            uint256 coreBalance = IERC20(asset).balanceOf(address(liquidityCore));
-            require(coreBalance >= toAMM, "Insufficient LiquidityCore balance");
-
-            // Transfer from LiquidityCore to this contract
-            liquidityCore.transferCollateral(asset, address(this), toAMM);
-
-            // Approve AMM to spend
-            IERC20(asset).forceApprove(address(fluidAMM), toAMM);
-
-            // === FIX CRIT-3.2: Implement addLiquidity with proper USDF pairing ===
-            // Get pool reserves to calculate optimal USDF amount
-            (uint256 reserveAsset, uint256 reserveUSDH) = fluidAMM.getReserves(asset, address(usdfToken));
-
-            // Calculate USDF amount needed for balanced pool entry
-            // usdfAmount = (toAMM * reserveUSDH) / reserveAsset
-            uint256 usdfAmount = 0;
-            if (reserveAsset > 0) {
-                usdfAmount = (toAMM * reserveUSDH) / reserveAsset;
-            } else {
-                // If pool is empty, use 1:1 ratio as default
-                usdfAmount = toAMM;
-            }
-
-            // Get USDF from LiquidityCore for pairing
-            // USDF is debt token, get it from LiquidityCore's reserves
-            liquidityCore.transferCollateral(address(usdfToken), address(this), usdfAmount);
-            IERC20(address(usdfToken)).forceApprove(address(fluidAMM), usdfAmount);
-
-            // Add liquidity to AMM (protocol-owned liquidity)
-            // Parameters: token0, token1, amount0Desired, amount1Desired, amount0Min, amount1Min
-            // Using 99% of desired amounts for slippage tolerance (1% max slippage)
-            uint256 minAsset = (toAMM * 99) / 100;
-            uint256 minUSDH = (usdfAmount * 99) / 100;
-
-            (uint256 amountAsset, uint256 amountUSDH, uint256 liquidity) = fluidAMM.addLiquidity(
-                asset,
-                address(usdfToken),
-                toAMM,
-                usdfAmount,
-                minAsset,
-                minUSDH
-            );
-
-            // Track LP tokens received
-            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) + liquidity);
+            _deployToAMM(asset, toAMM);
         }
 
         emit CollateralAllocated(asset, amount, toAMM, toVaults, toStaking);
     }
 
     /**
+     * @notice Internal function to deploy collateral to AMM
+     * @dev Extracted to reduce stack depth in allocateCollateral()
+     * @param asset The collateral asset
+     * @param amount Amount to deploy to AMM
+     */
+    function _deployToAMM(address asset, uint256 amount) internal {
+        // FIX CRIT-1: Verify LiquidityCore has the balance
+        uint256 coreBalance = IERC20(asset).balanceOf(address(liquidityCore));
+        require(coreBalance >= amount, "Insufficient LiquidityCore balance");
+
+        // Transfer from LiquidityCore to this contract
+        liquidityCore.transferCollateral(asset, address(this), amount);
+
+        // Approve AMM to spend
+        IERC20(asset).forceApprove(address(fluidAMM), amount);
+
+        // Get pool reserves to calculate optimal USDF amount
+        (uint256 reserveAsset, uint256 reserveUSDH) = fluidAMM.getReserves(asset, address(usdfToken));
+
+        // Calculate USDF amount needed for balanced pool entry
+        uint256 usdfAmount = reserveAsset > 0 ? (amount * reserveUSDH) / reserveAsset : amount;
+
+        // Get USDF from LiquidityCore for pairing
+        liquidityCore.transferCollateral(address(usdfToken), address(this), usdfAmount);
+        IERC20(address(usdfToken)).forceApprove(address(fluidAMM), usdfAmount);
+
+        // Add liquidity to AMM with 1% slippage tolerance
+        uint256 minAsset = (amount * 99) / 100;
+        uint256 minUSDH = (usdfAmount * 99) / 100;
+
+        (, , uint256 liquidity) = fluidAMM.addLiquidity(
+            asset,
+            address(usdfToken),
+            amount,
+            usdfAmount,
+            minAsset,
+            minUSDH
+        );
+
+        // Track LP tokens received
+        _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) + liquidity);
+    }
+
+    /**
      * @notice Rebalance asset allocation
      * @inheritdoc ICapitalEfficiencyEngine
-     * @dev FIX: Added validation that strategies are available before rebalancing to them
+     * @dev FIX: Split into sub-functions to avoid stack too deep error
      */
     function rebalance(address asset)
         external
@@ -402,92 +401,11 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         uint256 currentAMM = allocation.allocatedToAMM;
 
         // === FIX CRIT-3.3: Rebalance AMM allocation ===
-        // Rebalance AMM allocation
         if (currentAMM < targetAMM && address(fluidAMM) != address(0)) {
-            // === ADD LIQUIDITY PATH ===
-            uint256 toAdd = targetAMM - currentAMM;
-
-            // 1. Verify LiquidityCore has balance (FIX CRIT-1)
-            uint256 coreBalance = IERC20(asset).balanceOf(address(liquidityCore));
-            require(coreBalance >= toAdd, "Insufficient LiquidityCore balance");
-
-            // 2. Transfer from LiquidityCore to this contract
-            liquidityCore.transferCollateral(asset, address(this), toAdd);
-
-            // 3. Approve AMM to spend
-            IERC20(asset).forceApprove(address(fluidAMM), toAdd);
-
-            // 4. Calculate optimal USDF amount based on pool reserves
-            (uint256 reserveAsset, uint256 reserveUSDH) = fluidAMM.getReserves(asset, address(usdfToken));
-            uint256 usdfAmount = 0;
-            if (reserveAsset > 0) {
-                usdfAmount = (toAdd * reserveUSDH) / reserveAsset;
-            } else {
-                usdfAmount = toAdd;  // Default 1:1 for empty pools
-            }
-
-            // Get USDF from LiquidityCore for pairing
-            liquidityCore.transferCollateral(address(usdfToken), address(this), usdfAmount);
-            IERC20(address(usdfToken)).forceApprove(address(fluidAMM), usdfAmount);
-
-            // 5. Add liquidity to AMM with slippage protection (5% tolerance)
-            uint256 minAsset = (toAdd * 95) / 100;
-            uint256 minUSDH = (usdfAmount * 95) / 100;
-
-            (uint256 amountA, uint256 amountB, uint256 liquidity) = fluidAMM.addLiquidity(
-                asset,
-                address(usdfToken),
-                toAdd,
-                usdfAmount,
-                minAsset,
-                minUSDH
-            );
-
-            // 6. Update LP tokens owned
-            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) + liquidity);
-
-            // Update allocation tracking
+            _rebalanceAMMLiquidity(asset, targetAMM - currentAMM, true);
             allocation.allocatedToAMM = _toUint128(targetAMM);
-
         } else if (currentAMM > targetAMM && address(fluidAMM) != address(0)) {
-            // === REMOVE LIQUIDITY PATH ===
-            uint256 toRemove = currentAMM - targetAMM;
-
-            // 1. Calculate LP tokens to burn based on allocation amount
-            // LP tokens to remove = (toRemove / currentAMM) * lpTokensOwned
-            uint256 lpTokensToBurn = 0;
-            if (currentAMM > 0 && allocation.lpTokensOwned > 0) {
-                lpTokensToBurn = (toRemove * uint256(allocation.lpTokensOwned)) / currentAMM;
-            }
-
-            // 2. Remove liquidity from AMM with slippage protection (5% tolerance)
-            uint256 minAsset = (toRemove * 95) / 100;
-            uint256 minUSDH = 0;  // Accept any USDF amount returned
-
-            (uint256 amountA, uint256 amountB) = fluidAMM.removeLiquidity(
-                asset,
-                address(usdfToken),
-                lpTokensToBurn,
-                minAsset,
-                minUSDH
-            );
-
-            // 3. Update LP tokens owned
-            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) - lpTokensToBurn);
-
-            // 4. Return collateral to LiquidityCore
-            if (amountA > 0) {
-                IERC20(asset).safeTransfer(address(liquidityCore), amountA);
-                liquidityCore.depositCollateral(asset, address(this), amountA);
-            }
-
-            // Return any USDF received back to LiquidityCore
-            if (amountB > 0) {
-                IERC20(address(usdfToken)).safeTransfer(address(liquidityCore), amountB);
-                liquidityCore.depositCollateral(address(usdfToken), address(this), amountB);
-            }
-
-            // Update allocation tracking
+            _rebalanceAMMLiquidity(asset, currentAMM - targetAMM, false);
             allocation.allocatedToAMM = _toUint128(targetAMM);
         }
 
@@ -497,6 +415,92 @@ contract CapitalEfficiencyEngine is OptimizedSecurityBase, ICapitalEfficiencyEng
         allocation.lastRebalance = _toUint32(block.timestamp);
 
         emit AllocationRebalanced(asset, targetAMM, targetVaults, targetStaking);
+    }
+
+    /**
+     * @notice Internal function to handle AMM liquidity rebalancing
+     * @dev Extracted to avoid stack too deep errors. Handles both ADD and REMOVE paths.
+     * @param asset The collateral asset being rebalanced
+     * @param amount The amount to add or remove from AMM allocation
+     * @param isAddPath True for ADD liquidity, false for REMOVE liquidity
+     */
+    function _rebalanceAMMLiquidity(
+        address asset,
+        uint256 amount,
+        bool isAddPath
+    ) internal {
+        if (isAddPath) {
+            // === ADD LIQUIDITY PATH ===
+            // 1. Verify LiquidityCore has balance
+            uint256 coreBalance = IERC20(asset).balanceOf(address(liquidityCore));
+            require(coreBalance >= amount, "Insufficient LiquidityCore balance");
+
+            // 2. Transfer from LiquidityCore to this contract
+            liquidityCore.transferCollateral(asset, address(this), amount);
+
+            // 3. Approve AMM to spend
+            IERC20(asset).forceApprove(address(fluidAMM), amount);
+
+            // 4. Calculate optimal USDF amount based on pool reserves
+            (uint256 reserveAsset, uint256 reserveUSDH) = fluidAMM.getReserves(asset, address(usdfToken));
+            uint256 usdfAmount = reserveAsset > 0 ? (amount * reserveUSDH) / reserveAsset : amount;
+
+            // 5. Get USDF from LiquidityCore for pairing
+            liquidityCore.transferCollateral(address(usdfToken), address(this), usdfAmount);
+            IERC20(address(usdfToken)).forceApprove(address(fluidAMM), usdfAmount);
+
+            // 6. Add liquidity with slippage protection
+            uint256 minAsset = (amount * 95) / 100;
+            uint256 minUSDH = (usdfAmount * 95) / 100;
+
+            (, , uint256 liquidity) = fluidAMM.addLiquidity(
+                asset,
+                address(usdfToken),
+                amount,
+                usdfAmount,
+                minAsset,
+                minUSDH
+            );
+
+            // 7. Update LP tokens owned
+            _allocations[asset].lpTokensOwned = _toUint128(uint256(_allocations[asset].lpTokensOwned) + liquidity);
+        } else {
+            // === REMOVE LIQUIDITY PATH ===
+            CapitalAllocation storage allocation = _allocations[asset];
+
+            // 1. Calculate LP tokens to burn
+            uint256 currentAMM = allocation.allocatedToAMM;
+            uint256 lpTokensToBurn = 0;
+            if (currentAMM > 0 && allocation.lpTokensOwned > 0) {
+                lpTokensToBurn = (amount * uint256(allocation.lpTokensOwned)) / currentAMM;
+            }
+
+            // 2. Remove liquidity with slippage protection
+            uint256 minAsset = (amount * 95) / 100;
+
+            (uint256 amountA, uint256 amountB) = fluidAMM.removeLiquidity(
+                asset,
+                address(usdfToken),
+                lpTokensToBurn,
+                minAsset,
+                0
+            );
+
+            // 3. Update LP tokens owned
+            allocation.lpTokensOwned = _toUint128(uint256(allocation.lpTokensOwned) - lpTokensToBurn);
+
+            // 4. Return collateral to LiquidityCore
+            if (amountA > 0) {
+                IERC20(asset).safeTransfer(address(liquidityCore), amountA);
+                liquidityCore.depositCollateral(asset, address(this), amountA);
+            }
+
+            // 5. Return any USDF received back to LiquidityCore
+            if (amountB > 0) {
+                IERC20(address(usdfToken)).safeTransfer(address(liquidityCore), amountB);
+                liquidityCore.depositCollateral(address(usdfToken), address(this), amountB);
+            }
+        }
     }
 
     /**

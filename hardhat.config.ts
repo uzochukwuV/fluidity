@@ -15,10 +15,8 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 10000,
       },
-      viaIR: true,
-      evmVersion: "cancun", // Required for EIP-1153 transient storage
     },
   },
   networks: {
@@ -70,13 +68,14 @@ const config: HardhatUserConfig = {
       url: "https://rpc-amoy.polygon.technology",
       chainId: 80002,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      gasPrice: 25000000000, // 1 gwei
+      
     },
     "polygon-mainnet": {
       url: "https://polygon-rpc.com",
       chainId: 137,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      gasPrice: 50000000000, // 50 gwei (adjust as needed)
+      
+
     }
   },
   gasReporter: {

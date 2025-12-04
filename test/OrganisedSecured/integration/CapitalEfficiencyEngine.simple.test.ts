@@ -178,14 +178,50 @@ describe("Priority 3: CapitalEfficiencyEngine - Core Tests", function () {
     // Activate assets
     await liquidityCore.activateAsset(await wethToken.getAddress());
     await liquidityCore.activateAsset(await wbtcToken.getAddress());
+    await liquidityCore.activateAsset(await usdfToken.getAddress()); // Activate USDF too!
     await capitalEngine.activateAsset(await wethToken.getAddress());
     await capitalEngine.activateAsset(await wbtcToken.getAddress());
     console.log("✅ Assets activated");
 
-    // Mint tokens to LiquidityCore
-    await wethToken.mint(await liquidityCore.getAddress(), INITIAL_WETH);
-    await usdfToken.mint(await liquidityCore.getAddress(), INITIAL_USDF);
-    console.log("✅ Collateral minted to LiquidityCore\n");
+    // === FIX: Register collateral in LiquidityCore reserve tracking system ===
+    // depositCollateral requires BORROWER_OPS_ROLE, so grant it to admin temporarily
+    await accessControl.grantRole(BORROWER_OPS_ROLE, admin.address);
+    console.log("✅ Temporary BORROWER_OPS_ROLE granted to admin");
+
+    // Step 1: Mint tokens to admin
+    await wethToken.mint(admin.address, INITIAL_WETH);
+    await usdfToken.mint(admin.address, INITIAL_USDF);
+    console.log("✅ Collateral minted to admin");
+
+    // Step 2: Transfer tokens to LiquidityCore
+    await wethToken.connect(admin).transfer(await liquidityCore.getAddress(), INITIAL_WETH);
+    await usdfToken.connect(admin).transfer(await liquidityCore.getAddress(), INITIAL_USDF);
+    console.log("✅ Tokens transferred to LiquidityCore");
+
+    // Step 3: Call depositCollateral to register in tracking system
+    // This updates the collateralReserve state variable
+    await liquidityCore.connect(admin).depositCollateral(
+      await wethToken.getAddress(),
+      admin.address,
+      INITIAL_WETH
+    );
+    await liquidityCore.connect(admin).depositCollateral(
+      await usdfToken.getAddress(),
+      admin.address,
+      INITIAL_USDF
+    );
+    console.log("✅ Collateral registered in reserve tracking system");
+
+    // Step 4: Mint and register additional USDF for AMM pairing operations
+    const additionalUSDH = ethers.parseEther("1000000"); // 1M USDF for AMM
+    await usdfToken.mint(admin.address, additionalUSDH);
+    await usdfToken.connect(admin).transfer(await liquidityCore.getAddress(), additionalUSDH);
+    await liquidityCore.connect(admin).depositCollateral(
+      await usdfToken.getAddress(),
+      admin.address,
+      additionalUSDH
+    );
+    console.log("✅ Additional USDF registered for AMM operations\n");
   });
 
   describe("✅ Deployment Validation", function () {

@@ -570,9 +570,9 @@
       "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
         "src": "@openzeppelin\\contracts\\token\\ERC20\\utils\\SafeERC20.sol:18",
         "version": {
-          "withMetadata": "c96615c5f4b8e153a9fbc737821eb913af8c07e58265488d5a0c57490533c4fd",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "7b49bbd21c600360a5267b639ecabfca91fe8307bc2233f16ba53526cfd7f924",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -647,9 +647,9 @@
       "@openzeppelin/contracts/utils/Panic.sol:Panic": {
         "src": "@openzeppelin\\contracts\\utils\\Panic.sol:26",
         "version": {
-          "withMetadata": "d958acc3a5db9df0e6732deb85f9ce45abf5c9f1cd7bbff27271e44cfc15bf99",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "8274ceb09def77fcb7c2a3143cb3044019b25a89e3f38c1791012b25194add64",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -738,9 +738,9 @@
       "@openzeppelin/contracts/utils/ShortStrings.sol:ShortStrings": {
         "src": "@openzeppelin\\contracts\\utils\\ShortStrings.sol:40",
         "version": {
-          "withMetadata": "cc348edc22c0b35bd5a47570711b6744a5c87572ec98ed773231920a3df7467c",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "c9f172e7f7024f46aaa230dc8d33e151e402bdc9526bd6495de5b6bf166079c8",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [
@@ -761,9 +761,9 @@
       "@openzeppelin/contracts/utils/StorageSlot.sol:StorageSlot": {
         "src": "@openzeppelin\\contracts\\utils\\StorageSlot.sol:34",
         "version": {
-          "withMetadata": "5746189d2153c8e87c3a895130da20ea499dcf4fc4361b582d48d4d3d3d027f5",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "6cb4e4823e766591d68e74a109cde410b2e83d649c3a51d16e8c2b0f3cb493f0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -782,9 +782,9 @@
       "@openzeppelin/contracts/utils/Strings.sol:Strings": {
         "src": "@openzeppelin\\contracts\\utils\\Strings.sol:13",
         "version": {
-          "withMetadata": "b31969cbc2a27332909a991a4a10d5a4581ffe1f4a5107a68ed011350b81ae89",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "863f3c11d7f3323ff59e8d630c29d8a6780610a87a9b20cc570f2f5581e3a54d",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [
@@ -807,9 +807,9 @@
       "@openzeppelin/contracts/utils/cryptography/ECDSA.sol:ECDSA": {
         "src": "@openzeppelin\\contracts\\utils\\cryptography\\ECDSA.sol:12",
         "version": {
-          "withMetadata": "5187b4fdd564ff7f9664ea3403d8bf08fd3c95136d3464a54f9b8539380235d4",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "9626bd56e54bd5138c82b97c97669e33df15d7c3523a9a11dbdbbd1e0c293781",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -879,9 +879,9 @@
       "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol:MessageHashUtils": {
         "src": "@openzeppelin\\contracts\\utils\\cryptography\\MessageHashUtils.sol:15",
         "version": {
-          "withMetadata": "2d21328ef2bf6559defb167d05ec218609fc2f636a07ba97e25c030a2778329b",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "91c4881f12a70c66874eed09286126071ab0c6e635e92d1a0396de8fae2c1b60",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [
@@ -940,9 +940,9 @@
       "@openzeppelin/contracts/utils/math/Math.sol:Math": {
         "src": "@openzeppelin\\contracts\\utils\\math\\Math.sol:12",
         "version": {
-          "withMetadata": "c5c1d8c0b8dd64b25afbad4bc025cccf2f907d61128f388c75580e0c3c5b9560",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "ae01d84fa66b5973a2c58463e2b12ddc019b123b642e5c5438784f272e58c9f0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [
@@ -965,9 +965,9 @@
       "@openzeppelin/contracts/utils/math/SafeCast.sol:SafeCast": {
         "src": "@openzeppelin\\contracts\\utils\\math\\SafeCast.sol:19",
         "version": {
-          "withMetadata": "0cb1c164d68ffccefd3c6691ec0d82dcfd0ab249280f6565eec0652223176c7a",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "6616fba99eb48e700b4fb979118b8e3e15ec3540bf15bf38c4a48b9ef35155be",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -986,9 +986,9 @@
       "@openzeppelin/contracts/utils/math/SignedMath.sol:SignedMath": {
         "src": "@openzeppelin\\contracts\\utils\\math\\SignedMath.sol:11",
         "version": {
-          "withMetadata": "c3a958ef656cadc08bf0f99d9ac73ad4b4e03a264c9cc54ae5cd1c32bd82c27a",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "c8e6f4151aa7524bc2c61d294ce62f276008c5c32cba970c29300cb58943f83c",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [
@@ -1033,9 +1033,9 @@
       "contracts/OrganisedSecured/core/BorrowerOperationsV2.sol:BorrowerOperationsV2": {
         "src": "contracts\\OrganisedSecured\\core\\BorrowerOperationsV2.sol:46",
         "version": {
-          "withMetadata": "a355cf3c5095ce65efcd44125d915d7623411c37a6733c56e0e946f1325a3aff",
-          "withoutMetadata": "81f32b6e7673b3633e0159b8b44e42bb55ac6ba99dc84cbb8e0c323a5b07c87b",
-          "linkedWithoutMetadata": "81f32b6e7673b3633e0159b8b44e42bb55ac6ba99dc84cbb8e0c323a5b07c87b"
+          "withMetadata": "bab3c3e4696c8825d9194d2f39ecc16d75b5ec08c72bd6e14d5ce7e4a1987426",
+          "withoutMetadata": "d00886dcec57935dbce8957a39efb39ad70d34883896857b9adbbb75ba117c8c",
+          "linkedWithoutMetadata": "d00886dcec57935dbce8957a39efb39ad70d34883896857b9adbbb75ba117c8c"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/IBorrowerOperations.sol:IBorrowerOperations",
@@ -1137,7 +1137,7 @@
               "label": "troveManager",
               "offset": 0,
               "slot": "5",
-              "type": "t_contract(ITroveManager)26637",
+              "type": "t_contract(ITroveManager)26569",
               "contract": "BorrowerOperationsV2",
               "src": "contracts\\OrganisedSecured\\core\\BorrowerOperationsV2.sol:106"
             },
@@ -1145,7 +1145,7 @@
               "label": "capitalEfficiencyEngine",
               "offset": 0,
               "slot": "6",
-              "type": "t_contract(ICapitalEfficiencyEngine)24647",
+              "type": "t_contract(ICapitalEfficiencyEngine)24579",
               "contract": "BorrowerOperationsV2",
               "src": "contracts\\OrganisedSecured\\core\\BorrowerOperationsV2.sol:110"
             },
@@ -1199,11 +1199,11 @@
               "label": "bytes32",
               "numberOfBytes": "32"
             },
-            "t_contract(ICapitalEfficiencyEngine)24647": {
+            "t_contract(ICapitalEfficiencyEngine)24579": {
               "label": "contract ICapitalEfficiencyEngine",
               "numberOfBytes": "20"
             },
-            "t_contract(ITroveManager)26637": {
+            "t_contract(ITroveManager)26569": {
               "label": "contract ITroveManager",
               "numberOfBytes": "20"
             },
@@ -1249,9 +1249,9 @@
       "contracts/OrganisedSecured/core/CapitalEfficiencyEngine.sol:CapitalEfficiencyEngine": {
         "src": "contracts\\OrganisedSecured\\core\\CapitalEfficiencyEngine.sol:143",
         "version": {
-          "withMetadata": "c3410e9cba4723666c1c4e1693b8df018eba0565038b7a64a1162727aaacdac7",
-          "withoutMetadata": "2585d93af866c966c570a00750c562358002a784db29202cf98338e8fa0775d8",
-          "linkedWithoutMetadata": "2585d93af866c966c570a00750c562358002a784db29202cf98338e8fa0775d8"
+          "withMetadata": "eb612d100bef552cfb115979e4ce6194cae4577c1f10278c09c1e57289828ec2",
+          "withoutMetadata": "75cb39be3e85c9b9382da73c9f3fe03c1929d4a65d1ca4a6b6291a8e658ad814",
+          "linkedWithoutMetadata": "75cb39be3e85c9b9382da73c9f3fe03c1929d4a65d1ca4a6b6291a8e658ad814"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/ICapitalEfficiencyEngine.sol:ICapitalEfficiencyEngine",
@@ -1354,7 +1354,7 @@
               "label": "fluidAMM",
               "offset": 0,
               "slot": "5",
-              "type": "t_contract(IFluidAMM)25068",
+              "type": "t_contract(IFluidAMM)25000",
               "contract": "CapitalEfficiencyEngine",
               "src": "contracts\\OrganisedSecured\\core\\CapitalEfficiencyEngine.sol:177"
             },
@@ -1378,7 +1378,7 @@
               "label": "_allocations",
               "offset": 0,
               "slot": "8",
-              "type": "t_mapping(t_address,t_struct(CapitalAllocation)24401_storage)",
+              "type": "t_mapping(t_address,t_struct(CapitalAllocation)24333_storage)",
               "contract": "CapitalEfficiencyEngine",
               "src": "contracts\\OrganisedSecured\\core\\CapitalEfficiencyEngine.sol:186"
             },
@@ -1386,7 +1386,7 @@
               "label": "_configs",
               "offset": 0,
               "slot": "9",
-              "type": "t_mapping(t_address,t_struct(AllocationConfig)24415_storage)",
+              "type": "t_mapping(t_address,t_struct(AllocationConfig)24347_storage)",
               "contract": "CapitalEfficiencyEngine",
               "src": "contracts\\OrganisedSecured\\core\\CapitalEfficiencyEngine.sol:189"
             },
@@ -1424,7 +1424,7 @@
               "label": "bytes32",
               "numberOfBytes": "32"
             },
-            "t_contract(IFluidAMM)25068": {
+            "t_contract(IFluidAMM)25000": {
               "label": "contract IFluidAMM",
               "numberOfBytes": "20"
             },
@@ -1432,11 +1432,11 @@
               "label": "mapping(address => bool)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(AllocationConfig)24415_storage)": {
+            "t_mapping(t_address,t_struct(AllocationConfig)24347_storage)": {
               "label": "mapping(address => struct ICapitalEfficiencyEngine.AllocationConfig)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(CapitalAllocation)24401_storage)": {
+            "t_mapping(t_address,t_struct(CapitalAllocation)24333_storage)": {
               "label": "mapping(address => struct ICapitalEfficiencyEngine.CapitalAllocation)",
               "numberOfBytes": "32"
             },
@@ -1448,7 +1448,7 @@
               "label": "mapping(uint256 => uint256)",
               "numberOfBytes": "32"
             },
-            "t_struct(AllocationConfig)24415_storage": {
+            "t_struct(AllocationConfig)24347_storage": {
               "label": "struct ICapitalEfficiencyEngine.AllocationConfig",
               "members": [
                 {
@@ -1490,7 +1490,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(CapitalAllocation)24401_storage": {
+            "t_struct(CapitalAllocation)24333_storage": {
               "label": "struct ICapitalEfficiencyEngine.CapitalAllocation",
               "members": [
                 {
@@ -1570,9 +1570,9 @@
       "contracts/OrganisedSecured/core/LiquidityCore.sol:LiquidityCore": {
         "src": "contracts\\OrganisedSecured\\core\\LiquidityCore.sol:35",
         "version": {
-          "withMetadata": "6a45cf60cf57bccfb68342b45bf5d2ebe5dbdd460557f5a6d95286a6e39af787",
-          "withoutMetadata": "a12a2b923edf48d256466696d104aae7625eb0c53283a03787bccadf61b88831",
-          "linkedWithoutMetadata": "a12a2b923edf48d256466696d104aae7625eb0c53283a03787bccadf61b88831"
+          "withMetadata": "540e82f7862ee1f807c6773fb8f6b808900a0b5845fd80d2b064cf9c45da065c",
+          "withoutMetadata": "a7b2cd557909c8ec25e0ab54dd472676c392a2a1c47f5c13d78da01665b3490c",
+          "linkedWithoutMetadata": "a7b2cd557909c8ec25e0ab54dd472676c392a2a1c47f5c13d78da01665b3490c"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/ILiquidityCore.sol:ILiquidityCore",
@@ -1674,7 +1674,7 @@
               "label": "_assetLiquidity",
               "offset": 0,
               "slot": "5",
-              "type": "t_mapping(t_address,t_struct(AssetLiquidity)25085_storage)",
+              "type": "t_mapping(t_address,t_struct(AssetLiquidity)25017_storage)",
               "contract": "LiquidityCore",
               "src": "contracts\\OrganisedSecured\\core\\LiquidityCore.sol:47"
             },
@@ -1724,7 +1724,7 @@
               "label": "mapping(address => bool)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(AssetLiquidity)25085_storage)": {
+            "t_mapping(t_address,t_struct(AssetLiquidity)25017_storage)": {
               "label": "mapping(address => struct ILiquidityCore.AssetLiquidity)",
               "numberOfBytes": "32"
             },
@@ -1736,7 +1736,7 @@
               "label": "mapping(uint256 => uint256)",
               "numberOfBytes": "32"
             },
-            "t_struct(AssetLiquidity)25085_storage": {
+            "t_struct(AssetLiquidity)25017_storage": {
               "label": "struct ILiquidityCore.AssetLiquidity",
               "members": [
                 {
@@ -1820,9 +1820,9 @@
       "contracts/OrganisedSecured/core/PriceOracle.sol:PriceOracle": {
         "src": "contracts\\OrganisedSecured\\core\\PriceOracle.sol:67",
         "version": {
-          "withMetadata": "2c15ec1599f341ba0f614ed70ad47a000e2adae3813ac2ab00ccd125240c2fe3",
-          "withoutMetadata": "6de5a80c5b63031fdb0dc6870bd8564370ebb354004cadd095c42b81247c9720",
-          "linkedWithoutMetadata": "6de5a80c5b63031fdb0dc6870bd8564370ebb354004cadd095c42b81247c9720"
+          "withMetadata": "5b6f7f97cf7d9e2c6c2824135e3b7b910b42fa0a6af0b055261b6379618258d1",
+          "withoutMetadata": "60b1edcfb2560e2c6f9aa1e06ab49321cfbda6828b7c93a061810e3c2487b1f8",
+          "linkedWithoutMetadata": "60b1edcfb2560e2c6f9aa1e06ab49321cfbda6828b7c93a061810e3c2487b1f8"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/IPriceOracle.sol:IPriceOracle"
@@ -1872,7 +1872,7 @@
               "label": "_oracles",
               "offset": 0,
               "slot": "0",
-              "type": "t_mapping(t_address,t_struct(OracleConfig)25438_storage)",
+              "type": "t_mapping(t_address,t_struct(OracleConfig)25370_storage)",
               "contract": "PriceOracle",
               "src": "contracts\\OrganisedSecured\\core\\PriceOracle.sol:102"
             },
@@ -1926,11 +1926,11 @@
               "label": "mapping(address => bytes20)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(OracleConfig)25438_storage)": {
+            "t_mapping(t_address,t_struct(OracleConfig)25370_storage)": {
               "label": "mapping(address => struct IPriceOracle.OracleConfig)",
               "numberOfBytes": "32"
             },
-            "t_struct(OracleConfig)25438_storage": {
+            "t_struct(OracleConfig)25370_storage": {
               "label": "struct IPriceOracle.OracleConfig",
               "members": [
                 {
@@ -1994,9 +1994,9 @@
       "contracts/OrganisedSecured/core/SortedTroves.sol:SortedTroves": {
         "src": "contracts\\OrganisedSecured\\core\\SortedTroves.sol:20",
         "version": {
-          "withMetadata": "a30f23412418af5b560d4e0bed90f5e165176602933155cb01dae18c73ef0f52",
-          "withoutMetadata": "972468c062916daf8635abeacbd3545f9fc33d2f6e5e5ddb322aa081fc57df41",
-          "linkedWithoutMetadata": "972468c062916daf8635abeacbd3545f9fc33d2f6e5e5ddb322aa081fc57df41"
+          "withMetadata": "a396faf5948317b89aef1fb4f2a7eec13b55f4b9fe0a7ecc715a3b5bcc91b845",
+          "withoutMetadata": "75e0599e736415b7dc4445661515cc2fec7ba7494c517625a30426fd4987bd62",
+          "linkedWithoutMetadata": "75e0599e736415b7dc4445661515cc2fec7ba7494c517625a30426fd4987bd62"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/ISortedTroves.sol:ISortedTroves",
@@ -2076,7 +2076,7 @@
               "label": "nodes",
               "offset": 0,
               "slot": "5",
-              "type": "t_mapping(t_address,t_mapping(t_address,t_struct(Node)15098_storage))",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_struct(Node)15110_storage))",
               "contract": "SortedTroves",
               "src": "contracts\\OrganisedSecured\\core\\SortedTroves.sol:39"
             },
@@ -2130,7 +2130,7 @@
               "label": "mapping(address => address)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_mapping(t_address,t_struct(Node)15098_storage))": {
+            "t_mapping(t_address,t_mapping(t_address,t_struct(Node)15110_storage))": {
               "label": "mapping(address => mapping(address => struct SortedTroves.Node))",
               "numberOfBytes": "32"
             },
@@ -2138,7 +2138,7 @@
               "label": "mapping(address => mapping(address => uint256))",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(Node)15098_storage)": {
+            "t_mapping(t_address,t_struct(Node)15110_storage)": {
               "label": "mapping(address => struct SortedTroves.Node)",
               "numberOfBytes": "32"
             },
@@ -2154,7 +2154,7 @@
               "label": "mapping(uint256 => uint256)",
               "numberOfBytes": "32"
             },
-            "t_struct(Node)15098_storage": {
+            "t_struct(Node)15110_storage": {
               "label": "struct SortedTroves.Node",
               "members": [
                 {
@@ -2192,9 +2192,9 @@
       "contracts/OrganisedSecured/core/StabilityPool.sol:StabilityPool": {
         "src": "contracts\\OrganisedSecured\\core\\StabilityPool.sol:44",
         "version": {
-          "withMetadata": "433a8a5aaee6c194e92ae2f61f537f13f84d572b951e782f822fd74b9f06b3ff",
-          "withoutMetadata": "3cda9d103f18d19da26919459fd12592868e644c56efde9b0b7aeae8227fecaf",
-          "linkedWithoutMetadata": "3cda9d103f18d19da26919459fd12592868e644c56efde9b0b7aeae8227fecaf"
+          "withMetadata": "70e9ee830af269235e5a0c52948608e7a501dffc5a9aa0dab0f37c458c439234",
+          "withoutMetadata": "4bf0fdce4871ebea59668fb1c2d54c5aa6fcb498f4dc7eb3903b0bbc529c4d8f",
+          "linkedWithoutMetadata": "4bf0fdce4871ebea59668fb1c2d54c5aa6fcb498f4dc7eb3903b0bbc529c4d8f"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/IStabilityPool.sol:IStabilityPool",
@@ -2457,9 +2457,9 @@
       "contracts/OrganisedSecured/core/TroveManagerV2.sol:TroveManagerV2": {
         "src": "contracts\\OrganisedSecured\\core\\TroveManagerV2.sol:45",
         "version": {
-          "withMetadata": "362bd82e97c0dc1d53f182de1257a4285f87017afbfd8e33e1df389e20ec8bdb",
-          "withoutMetadata": "9b90cad6fc6c2907bc38546d39e1ef066fd92e9d188f9f447810f25770fe2040",
-          "linkedWithoutMetadata": "9b90cad6fc6c2907bc38546d39e1ef066fd92e9d188f9f447810f25770fe2040"
+          "withMetadata": "316a3fffdacc930413cc7a4bf0691506aca86a3752375bc6bc7f3eed64c890c7",
+          "withoutMetadata": "5e134b9201a71f8a39608a2da7f9e62f69f3393a603b3d25f2baf854f819a653",
+          "linkedWithoutMetadata": "5e134b9201a71f8a39608a2da7f9e62f69f3393a603b3d25f2baf854f819a653"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/ITroveManager.sol:ITroveManager",
@@ -2578,7 +2578,7 @@
               "label": "stabilityPool",
               "offset": 0,
               "slot": "5",
-              "type": "t_contract(IStabilityPool)26033",
+              "type": "t_contract(IStabilityPool)25965",
               "contract": "TroveManagerV2",
               "src": "contracts\\OrganisedSecured\\core\\TroveManagerV2.sol:100"
             },
@@ -2586,7 +2586,7 @@
               "label": "capitalEfficiencyEngine",
               "offset": 0,
               "slot": "6",
-              "type": "t_contract(ICapitalEfficiencyEngine)24647",
+              "type": "t_contract(ICapitalEfficiencyEngine)24579",
               "contract": "TroveManagerV2",
               "src": "contracts\\OrganisedSecured\\core\\TroveManagerV2.sol:101"
             },
@@ -2708,11 +2708,11 @@
               "label": "bytes32",
               "numberOfBytes": "32"
             },
-            "t_contract(ICapitalEfficiencyEngine)24647": {
+            "t_contract(ICapitalEfficiencyEngine)24579": {
               "label": "contract ICapitalEfficiencyEngine",
               "numberOfBytes": "20"
             },
-            "t_contract(IStabilityPool)26033": {
+            "t_contract(IStabilityPool)25965": {
               "label": "contract IStabilityPool",
               "numberOfBytes": "20"
             },
@@ -2754,9 +2754,9 @@
       "contracts/OrganisedSecured/core/UnifiedLiquidityPool.sol:UnifiedLiquidityPool": {
         "src": "contracts\\OrganisedSecured\\core\\UnifiedLiquidityPool.sol:15",
         "version": {
-          "withMetadata": "55a2f29c2582b02803358135ef39d4d1f04e14baedaad209a7f9ccc56ffa95bc",
-          "withoutMetadata": "137bc2142621568be45a5f703e913bead7ad7a0fd1aba61d37fb027a721966c7",
-          "linkedWithoutMetadata": "137bc2142621568be45a5f703e913bead7ad7a0fd1aba61d37fb027a721966c7"
+          "withMetadata": "ccf8de2af05e8dc7a3a17dc982ddd71f35d24504242b6b32d3883aef84fe6757",
+          "withoutMetadata": "8791a559ab4681e49991c73c7b2ff9312d10959efe3e10448049025c9893b6d0",
+          "linkedWithoutMetadata": "8791a559ab4681e49991c73c7b2ff9312d10959efe3e10448049025c9893b6d0"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/IUnifiedLiquidityPool.sol:IUnifiedLiquidityPool",
@@ -2849,7 +2849,7 @@
               "label": "assets",
               "offset": 0,
               "slot": "5",
-              "type": "t_mapping(t_address,t_struct(AssetInfo)26788_storage)",
+              "type": "t_mapping(t_address,t_struct(AssetInfo)26720_storage)",
               "contract": "UnifiedLiquidityPool",
               "src": "contracts\\OrganisedSecured\\core\\UnifiedLiquidityPool.sol:18"
             },
@@ -2873,7 +2873,7 @@
               "label": "allocations",
               "offset": 0,
               "slot": "8",
-              "type": "t_mapping(t_address,t_struct(LiquidityAllocation)26799_storage)",
+              "type": "t_mapping(t_address,t_struct(LiquidityAllocation)26731_storage)",
               "contract": "UnifiedLiquidityPool",
               "src": "contracts\\OrganisedSecured\\core\\UnifiedLiquidityPool.sol:21"
             },
@@ -2897,7 +2897,7 @@
               "label": "priceOracle",
               "offset": 0,
               "slot": "11",
-              "type": "t_contract(IPriceOracle)25660",
+              "type": "t_contract(IPriceOracle)25592",
               "contract": "UnifiedLiquidityPool",
               "src": "contracts\\OrganisedSecured\\core\\UnifiedLiquidityPool.sol:29"
             }
@@ -2919,7 +2919,7 @@
               "label": "bytes32",
               "numberOfBytes": "32"
             },
-            "t_contract(IPriceOracle)25660": {
+            "t_contract(IPriceOracle)25592": {
               "label": "contract IPriceOracle",
               "numberOfBytes": "20"
             },
@@ -2927,11 +2927,11 @@
               "label": "mapping(address => mapping(address => uint256))",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(AssetInfo)26788_storage)": {
+            "t_mapping(t_address,t_struct(AssetInfo)26720_storage)": {
               "label": "mapping(address => struct IUnifiedLiquidityPool.AssetInfo)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(LiquidityAllocation)26799_storage)": {
+            "t_mapping(t_address,t_struct(LiquidityAllocation)26731_storage)": {
               "label": "mapping(address => struct IUnifiedLiquidityPool.LiquidityAllocation)",
               "numberOfBytes": "32"
             },
@@ -2947,7 +2947,7 @@
               "label": "mapping(uint256 => uint256)",
               "numberOfBytes": "32"
             },
-            "t_struct(AssetInfo)26788_storage": {
+            "t_struct(AssetInfo)26720_storage": {
               "label": "struct IUnifiedLiquidityPool.AssetInfo",
               "members": [
                 {
@@ -3013,7 +3013,7 @@
               ],
               "numberOfBytes": "256"
             },
-            "t_struct(LiquidityAllocation)26799_storage": {
+            "t_struct(LiquidityAllocation)26731_storage": {
               "label": "struct IUnifiedLiquidityPool.LiquidityAllocation",
               "members": [
                 {
@@ -3063,9 +3063,9 @@
       "contracts/OrganisedSecured/dex/FluidAMM.sol:FluidAMM": {
         "src": "contracts\\OrganisedSecured\\dex\\FluidAMM.sol:37",
         "version": {
-          "withMetadata": "324e26c9dc28a5bee88d75c04f351ba66f195bfdb8ce846db689b54afd5ffba7",
-          "withoutMetadata": "1acc2b578a768a202a75b9c581cfab6780ccdec51e4355d3b2375b3f5e2cf0b0",
-          "linkedWithoutMetadata": "1acc2b578a768a202a75b9c581cfab6780ccdec51e4355d3b2375b3f5e2cf0b0"
+          "withMetadata": "babee32f2c1f4d0e5d8391714adca97657e35b6899608cfce909e46235e69695",
+          "withoutMetadata": "f0153b0ba3e7317ee91716f714252c163544129b8303aca32fd37108c7bbfdab",
+          "linkedWithoutMetadata": "f0153b0ba3e7317ee91716f714252c163544129b8303aca32fd37108c7bbfdab"
         },
         "inherit": [
           "contracts/OrganisedSecured/interfaces/IFluidAMM.sol:IFluidAMM",
@@ -3163,7 +3163,7 @@
               "label": "_pools",
               "offset": 0,
               "slot": "5",
-              "type": "t_mapping(t_bytes32,t_struct(Pool)24674_storage)",
+              "type": "t_mapping(t_bytes32,t_struct(Pool)24606_storage)",
               "contract": "FluidAMM",
               "src": "contracts\\OrganisedSecured\\dex\\FluidAMM.sol:58"
             },
@@ -3237,7 +3237,7 @@
               "label": "mapping(bytes32 => mapping(address => uint256))",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_bytes32,t_struct(Pool)24674_storage)": {
+            "t_mapping(t_bytes32,t_struct(Pool)24606_storage)": {
               "label": "mapping(bytes32 => struct IFluidAMM.Pool)",
               "numberOfBytes": "32"
             },
@@ -3245,7 +3245,7 @@
               "label": "mapping(uint256 => uint256)",
               "numberOfBytes": "32"
             },
-            "t_struct(Pool)24674_storage": {
+            "t_struct(Pool)24606_storage": {
               "label": "struct IFluidAMM.Pool",
               "members": [
                 {
@@ -3752,9 +3752,9 @@
       "contracts/OrganisedSecured/libraries/BatchOperations.sol:BatchOperations": {
         "src": "contracts\\OrganisedSecured\\libraries\\BatchOperations.sol:21",
         "version": {
-          "withMetadata": "d20bdcfbc8b6e9041ae2b82d89ef8142908d1d99512c8012bff2983a264bcd26",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "56b7cf8bc13b60690c50d4ca44820a7778cd5fc4e5ed391cc64dfeff09c5db9c",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -3773,9 +3773,9 @@
       "contracts/OrganisedSecured/libraries/CalldataDecoder.sol:CalldataDecoder": {
         "src": "contracts\\OrganisedSecured\\libraries\\CalldataDecoder.sol:20",
         "version": {
-          "withMetadata": "dc9940eea50c3767f85decea95323a8485409b3477cf2ae6ac5ca04d99054e41",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "72f5ccbb4c0ce096485764723ec82ed4009fee7ce0d8c4358c7ecdc4a0994376",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -3794,9 +3794,9 @@
       "contracts/OrganisedSecured/libraries/GasOptimizedMath.sol:GasOptimizedMath": {
         "src": "contracts\\OrganisedSecured\\libraries\\GasOptimizedMath.sol:23",
         "version": {
-          "withMetadata": "c9ff39aa8fc24536b5867814ddf6d1e68c5ef0870e239ccc6b3806044bdc94f2",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "56e86397f7b10033f0108a1a8b3f26c86dadb04c226d421eeed4df91678cb35c",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -3815,9 +3815,9 @@
       "contracts/OrganisedSecured/libraries/PackedTrove.sol:PackedTrove": {
         "src": "contracts\\OrganisedSecured\\libraries\\PackedTrove.sol:17",
         "version": {
-          "withMetadata": "d0737cb291638fa70f1046a39869f2a6d4359873bafe78504369d2b40b1c521f",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "bcb9247690a871c2b5b81fc82d43cad58ad29eff1d8929252575bf8211fcb019",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -3834,7 +3834,7 @@
         "solcVersion": "0.8.24"
       },
       "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientCache": {
-        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:747",
+        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:282",
         "inherit": [],
         "libraries": [
           "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientStorage"
@@ -3843,16 +3843,94 @@
         "linkReferences": [],
         "errors": [],
         "layout": {
-          "storage": [],
-          "types": {},
+          "storage": [
+            {
+              "label": "_usedCacheSlots",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_array(t_bytes32)dyn_storage",
+              "contract": "TransientCache",
+              "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:286"
+            },
+            {
+              "label": "_inTransientContext",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bool",
+              "contract": "TransientCache",
+              "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:287"
+            }
+          ],
+          "types": {
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            }
+          },
           "layoutVersion": "1.2",
-          "flat": false,
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.24"
+      },
+      "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientContext": {
+        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:389",
+        "inherit": [],
+        "libraries": [
+          "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientStorage"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_contextSlots",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_array(t_bytes32)dyn_storage",
+              "contract": "TransientContext",
+              "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:392"
+            },
+            {
+              "label": "_locked",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bool",
+              "contract": "TransientContext",
+              "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:393"
+            }
+          ],
+          "types": {
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
           "namespaces": {}
         },
         "solcVersion": "0.8.24"
       },
       "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientReentrancyGuard": {
-        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:701",
+        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:222",
         "inherit": [],
         "libraries": [
           "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientStorage"
@@ -3870,11 +3948,11 @@
         "solcVersion": "0.8.24"
       },
       "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientStorage": {
-        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:502",
+        "src": "contracts\\OrganisedSecured\\libraries\\TransientStorage.sol:25",
         "version": {
-          "withMetadata": "bd3d98d2d8b2f1d51582818126173f90a02d9a37afcd7f5e6d93e52cb8d76ec9",
-          "withoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157",
-          "linkedWithoutMetadata": "95d40a2c1c3f26a6a79fd4d364874e56c7fd721151816483687512865903c157"
+          "withMetadata": "4ad31f4b895400aa3f488bcecf93efe6af3257b1d01e9e906232c9d1cf02b04b",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
         },
         "inherit": [],
         "libraries": [],
@@ -3893,9 +3971,9 @@
       "contracts/OrganisedSecured/mocks/MockChainlinkFeed.sol:MockChainlinkFeed": {
         "src": "contracts\\OrganisedSecured\\mocks\\MockChainlinkFeed.sol:9",
         "version": {
-          "withMetadata": "dbf06d0ed7e3815184da86fb577a26a9a7f50610adf4c8b7d9a678a40d45c591",
-          "withoutMetadata": "442cd995b9970581be4bea21d36722d5c6d10a8b4ea7ee002cb9c61f3fd5a253",
-          "linkedWithoutMetadata": "442cd995b9970581be4bea21d36722d5c6d10a8b4ea7ee002cb9c61f3fd5a253"
+          "withMetadata": "49a22fee15453b1105f2f3ce17cb7863448c1eb92bea18bf04fbe1a3218241f4",
+          "withoutMetadata": "f28294d9bfc14609df1972c621ccc1dfd692b39fe0d0e5998d0699955171042d",
+          "linkedWithoutMetadata": "f28294d9bfc14609df1972c621ccc1dfd692b39fe0d0e5998d0699955171042d"
         },
         "inherit": [],
         "libraries": [],
@@ -3972,7 +4050,7 @@
               "label": "_rounds",
               "offset": 0,
               "slot": "5",
-              "type": "t_mapping(t_uint80,t_struct(Round)28714_storage)",
+              "type": "t_mapping(t_uint80,t_struct(Round)28877_storage)",
               "contract": "MockChainlinkFeed",
               "src": "contracts\\OrganisedSecured\\mocks\\MockChainlinkFeed.sol:18"
             }
@@ -3986,11 +4064,11 @@
               "label": "int256",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_uint80,t_struct(Round)28714_storage)": {
+            "t_mapping(t_uint80,t_struct(Round)28877_storage)": {
               "label": "mapping(uint80 => struct MockChainlinkFeed.Round)",
               "numberOfBytes": "32"
             },
-            "t_struct(Round)28714_storage": {
+            "t_struct(Round)28877_storage": {
               "label": "struct MockChainlinkFeed.Round",
               "members": [
                 {
@@ -4048,9 +4126,9 @@
       "contracts/OrganisedSecured/mocks/MockERC20.sol:MockERC20": {
         "src": "contracts\\OrganisedSecured\\mocks\\MockERC20.sol:6",
         "version": {
-          "withMetadata": "8011ddaf5244a0f74050a67cd9355bca854cd8715183e7a55146a0be346f6191",
-          "withoutMetadata": "ef96bcc0b32e379e31baf49d1bd9a4ae5a96404ace258e9ce2793da155d94e20",
-          "linkedWithoutMetadata": "ef96bcc0b32e379e31baf49d1bd9a4ae5a96404ace258e9ce2793da155d94e20"
+          "withMetadata": "0b307802edc92c51e3bdd92f1ac36eb05005a2d07be27bf8d71fb625f5498475",
+          "withoutMetadata": "abb469ac520f4f2a486853b0348c28c0be698c359abb38d08224fb250cc543aa",
+          "linkedWithoutMetadata": "abb469ac520f4f2a486853b0348c28c0be698c359abb38d08224fb250cc543aa"
         },
         "inherit": [
           "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
@@ -4166,9 +4244,9 @@
       "contracts/OrganisedSecured/mocks/MockOrochiOracle.sol:MockOrochiOracle": {
         "src": "contracts\\OrganisedSecured\\mocks\\MockOrochiOracle.sol:13",
         "version": {
-          "withMetadata": "d21a6e777895e9974b43aa3611dea39a47865cda8b1f84482c29ffef3fe6836e",
-          "withoutMetadata": "1948262d92097fb94d26298fe754536cd07953337451739172b0e8f224159cc5",
-          "linkedWithoutMetadata": "1948262d92097fb94d26298fe754536cd07953337451739172b0e8f224159cc5"
+          "withMetadata": "e36e8d0efcef5de9c5712bf16a1e9c637ce5b950df3136bafe8cc07e363a32f5",
+          "withoutMetadata": "913fcd6fa51ae5f65b0f36850fee23312601ed3a2fd60f2770d3e39b664d98a4",
+          "linkedWithoutMetadata": "913fcd6fa51ae5f65b0f36850fee23312601ed3a2fd60f2770d3e39b664d98a4"
         },
         "inherit": [],
         "libraries": [],
@@ -4216,9 +4294,9 @@
       "contracts/OrganisedSecured/mocks/MockPriceOracle.sol:MockPriceOracle": {
         "src": "contracts\\OrganisedSecured\\mocks\\MockPriceOracle.sol:9",
         "version": {
-          "withMetadata": "b9363b85b2f8e76f49fae00a862d74a942039f423ac9f06dca77b83bcee56322",
-          "withoutMetadata": "dde6fb9b29ac270a77e540ceca5630be0a711be4a1afbbbc0c25c5ac331ea139",
-          "linkedWithoutMetadata": "dde6fb9b29ac270a77e540ceca5630be0a711be4a1afbbbc0c25c5ac331ea139"
+          "withMetadata": "b10408bac1caa25eb21d70de6f38d7966f02d8810ba2be3dd3fce839552345fa",
+          "withoutMetadata": "0a1ccbc974047b1b4371f9faee03db02dcc84829f8abc73e598686229fa4f428",
+          "linkedWithoutMetadata": "0a1ccbc974047b1b4371f9faee03db02dcc84829f8abc73e598686229fa4f428"
         },
         "inherit": [],
         "libraries": [],
@@ -4266,9 +4344,9 @@
       "contracts/OrganisedSecured/mocks/TestPriceOracleCacher.sol:TestPriceOracleCacher": {
         "src": "contracts\\OrganisedSecured\\mocks\\TestPriceOracleCacher.sol:11",
         "version": {
-          "withMetadata": "f07572702a77e9ef18053b447945f858a419e122fa068a3773731a2022e912fa",
-          "withoutMetadata": "39491c34494863f126f51b93cdcc87077a5fa3c1b66769f92effe1c4ad9cf19d",
-          "linkedWithoutMetadata": "39491c34494863f126f51b93cdcc87077a5fa3c1b66769f92effe1c4ad9cf19d"
+          "withMetadata": "a6b2c02d90b43a189ad89b1ab2a619e9066fbbbc2c1ab600d0f916d8c96017a5",
+          "withoutMetadata": "2bd95d1f9d90f574bf6c42699d3f1af9a4c8d0ccf8e320def8f4653d8830cd0f",
+          "linkedWithoutMetadata": "2bd95d1f9d90f574bf6c42699d3f1af9a4c8d0ccf8e320def8f4653d8830cd0f"
         },
         "inherit": [],
         "libraries": [],
@@ -4303,9 +4381,9 @@
       "contracts/OrganisedSecured/mocks/TestStaticCallOracle.sol:TestStaticCallOracle": {
         "src": "contracts\\OrganisedSecured\\mocks\\TestStaticCallOracle.sol:4",
         "version": {
-          "withMetadata": "11ea567be38f3c6ebab78cb926243e3d20fb2c1fcaececb26e70a93f4f653b36",
-          "withoutMetadata": "ff5c69a1fb08dd586be5035db9e9373afee080e62f9f646bbd36f637dabc5668",
-          "linkedWithoutMetadata": "ff5c69a1fb08dd586be5035db9e9373afee080e62f9f646bbd36f637dabc5668"
+          "withMetadata": "cb5520503becf0d1656f930ec822c5b6253c7497ab9a3a70b204783b08f573d2",
+          "withoutMetadata": "491567e5702b61076625009c4f1b91e240bff5ab86228e453d8fa3eef25a3ff3",
+          "linkedWithoutMetadata": "491567e5702b61076625009c4f1b91e240bff5ab86228e453d8fa3eef25a3ff3"
         },
         "inherit": [],
         "libraries": [],
@@ -4339,9 +4417,9 @@
       "contracts/OrganisedSecured/tokens/USDF.sol:USDF": {
         "src": "contracts\\OrganisedSecured\\tokens\\USDF.sol:14",
         "version": {
-          "withMetadata": "8d3385e51af38698593ca25e0fe4d28dff296e3fb34c304ef96a6037ef2bc38f",
-          "withoutMetadata": "8d3385e51af38698593ca25e0fe4d28dff296e3fb34c304ef96a6037ef2bc38f",
-          "linkedWithoutMetadata": "8d3385e51af38698593ca25e0fe4d28dff296e3fb34c304ef96a6037ef2bc38f"
+          "withMetadata": "bc5d59201e37324e7bb09fb371ced1a430c49608aad790214995efb80a3e2f3f",
+          "withoutMetadata": "6a86025c2f957f9c5dffb9498a850e35ef7d03022f3d6cf0bd99ba7f5135ee39",
+          "linkedWithoutMetadata": "6a86025c2f957f9c5dffb9498a850e35ef7d03022f3d6cf0bd99ba7f5135ee39"
         },
         "inherit": [
           "@openzeppelin/contracts/utils/Pausable.sol:Pausable",
@@ -4536,9 +4614,9 @@
       "contracts/OrganisedSecured/utils/AccessControlManager.sol:AccessControlManager": {
         "src": "contracts\\OrganisedSecured\\utils\\AccessControlManager.sol:12",
         "version": {
-          "withMetadata": "652bc5b67af97e8afc6d6830ab0f9bb54208639feed8b7274ae7fd091b2e6787",
-          "withoutMetadata": "652bc5b67af97e8afc6d6830ab0f9bb54208639feed8b7274ae7fd091b2e6787",
-          "linkedWithoutMetadata": "652bc5b67af97e8afc6d6830ab0f9bb54208639feed8b7274ae7fd091b2e6787"
+          "withMetadata": "72e90cb1e58b3b7f93d3059f466a043b2401f8387d0b634b46213ed5b5ee727b",
+          "withoutMetadata": "231008f187e7aca41e71c2ef7bf2eefaeba5534374766bf0dcff69acf0817981",
+          "linkedWithoutMetadata": "231008f187e7aca41e71c2ef7bf2eefaeba5534374766bf0dcff69acf0817981"
         },
         "inherit": [
           "@openzeppelin/contracts/utils/ReentrancyGuard.sol:ReentrancyGuard",
@@ -4826,9 +4904,9 @@
       "contracts/OrganisedSecured/utils/TestContracts.sol:BatchOperationsTest": {
         "src": "contracts\\OrganisedSecured\\utils\\TestContracts.sol:117",
         "version": {
-          "withMetadata": "d3243f8e378332fc9c3e8c888fdf312359c77b961311f5ed9620dbaf2b0e65ea",
-          "withoutMetadata": "12b8e127b34637f87387aaf3afcb574ec5ccf9cb12fa434a07d40b386a43148c",
-          "linkedWithoutMetadata": "12b8e127b34637f87387aaf3afcb574ec5ccf9cb12fa434a07d40b386a43148c"
+          "withMetadata": "27a204eebfca70e9df2f4e2c7641aa0a9903a215dd2174651ef4de51bae94be7",
+          "withoutMetadata": "c1ea950c9d71a2d319ce6be1c3055145e39d3e6a482aa7f8e6fdd7a6ee99c434",
+          "linkedWithoutMetadata": "c1ea950c9d71a2d319ce6be1c3055145e39d3e6a482aa7f8e6fdd7a6ee99c434"
         },
         "inherit": [],
         "libraries": [
@@ -4857,9 +4935,9 @@
       "contracts/OrganisedSecured/utils/TestContracts.sol:CalldataDecoderTest": {
         "src": "contracts\\OrganisedSecured\\utils\\TestContracts.sol:192",
         "version": {
-          "withMetadata": "3468c6bc572adaa767e3e130f57fe5a3a276c0ced8a92f2bc692173fda528010",
-          "withoutMetadata": "3777aa8e666cd3cd54f4e66e9e54dac00fb41963a09192a2edb445638a47f2f8",
-          "linkedWithoutMetadata": "3777aa8e666cd3cd54f4e66e9e54dac00fb41963a09192a2edb445638a47f2f8"
+          "withMetadata": "521d31f5d88365a7ed10bc4c2bbcc266b2b6e30befcb061b93a5621f5f0ff298",
+          "withoutMetadata": "58f69cade49ad3efb3263e7727042b05b1501b8ab8820de360724d9ed861f8f7",
+          "linkedWithoutMetadata": "58f69cade49ad3efb3263e7727042b05b1501b8ab8820de360724d9ed861f8f7"
         },
         "inherit": [],
         "libraries": [
@@ -4889,9 +4967,9 @@
       "contracts/OrganisedSecured/utils/TestContracts.sol:GasOptimizedMathTest": {
         "src": "contracts\\OrganisedSecured\\utils\\TestContracts.sol:259",
         "version": {
-          "withMetadata": "1000cb17b4ca5a246bb139c778f8951c18d34afca46c2b58614b29b33ac156f1",
-          "withoutMetadata": "9242293a207b25952e12278ab47f52f38f410d6e4e0204e6a3fa77bd986289c3",
-          "linkedWithoutMetadata": "9242293a207b25952e12278ab47f52f38f410d6e4e0204e6a3fa77bd986289c3"
+          "withMetadata": "d2a8acb2b52842a88a6b8f341171034da74ac0938b85587fce8e7399f72858ee",
+          "withoutMetadata": "b1232fa726e81f4978ef3fa5bc0356660c0136112efd67af25a6a2889ab5e32f",
+          "linkedWithoutMetadata": "b1232fa726e81f4978ef3fa5bc0356660c0136112efd67af25a6a2889ab5e32f"
         },
         "inherit": [],
         "libraries": [
@@ -4926,9 +5004,9 @@
       "contracts/OrganisedSecured/utils/TestContracts.sol:MockERC20Mintable": {
         "src": "contracts\\OrganisedSecured\\utils\\TestContracts.sol:100",
         "version": {
-          "withMetadata": "3169345151c66b90588164b0940a94cddf83e71dd83b41f0e753faaa546461f8",
-          "withoutMetadata": "3169345151c66b90588164b0940a94cddf83e71dd83b41f0e753faaa546461f8",
-          "linkedWithoutMetadata": "3169345151c66b90588164b0940a94cddf83e71dd83b41f0e753faaa546461f8"
+          "withMetadata": "aaaa2afc4e5659fd72859d8477f9bd49b491103c1fcaeccfaf195319c2e4cec3",
+          "withoutMetadata": "b6d68b123f7e0e1df112f3bd26402268469ddbe931eba956ed97ec350974594b",
+          "linkedWithoutMetadata": "b6d68b123f7e0e1df112f3bd26402268469ddbe931eba956ed97ec350974594b"
         },
         "inherit": [
           "@openzeppelin/contracts/access/AccessControl.sol:AccessControl",
@@ -5071,9 +5149,9 @@
       "contracts/OrganisedSecured/utils/TestContracts.sol:PackedTroveTest": {
         "src": "contracts\\OrganisedSecured\\utils\\TestContracts.sol:17",
         "version": {
-          "withMetadata": "946c5522dd9db3c7b64669ce65a06c25d6c7a8581c83ca5eb0e91e56477a5277",
-          "withoutMetadata": "b69e626ae5641191020a66bae5370061be1e16a48f3c04a2fe0b77edaa438932",
-          "linkedWithoutMetadata": "b69e626ae5641191020a66bae5370061be1e16a48f3c04a2fe0b77edaa438932"
+          "withMetadata": "27da554693a5a81e06b719be81e7da676b221b9adb9b1612cd2a2f0e5bf6a54b",
+          "withoutMetadata": "1ff7e8a8caf499df3c68162afa1b8a04e7a5d50d4164503525672e3a145c345f",
+          "linkedWithoutMetadata": "1ff7e8a8caf499df3c68162afa1b8a04e7a5d50d4164503525672e3a145c345f"
         },
         "inherit": [],
         "libraries": [
@@ -5103,9 +5181,9 @@
       "contracts/OrganisedSecured/utils/TestContracts.sol:TransientStorageTest": {
         "src": "contracts\\OrganisedSecured\\utils\\TestContracts.sol:67",
         "version": {
-          "withMetadata": "1e90e88fcd3fd6d6cc3c48aa84f8e7c5b42157491519a39ff0ba64e8881fb8ad",
-          "withoutMetadata": "1130f623851456cb19f630fd1759ad098a478f33dfbc534e96fc71ee58dbf7d5",
-          "linkedWithoutMetadata": "1130f623851456cb19f630fd1759ad098a478f33dfbc534e96fc71ee58dbf7d5"
+          "withMetadata": "ce96779dac0e12428dcbe201504f37a3ba69726ba398602ee5f2598c4a9bc251",
+          "withoutMetadata": "5b1ea9cbefc01394450bb4bdbf8c5b437324102309cc891eb5c7f60ce97b4247",
+          "linkedWithoutMetadata": "5b1ea9cbefc01394450bb4bdbf8c5b437324102309cc891eb5c7f60ce97b4247"
         },
         "inherit": [
           "contracts/OrganisedSecured/libraries/TransientStorage.sol:TransientReentrancyGuard"
